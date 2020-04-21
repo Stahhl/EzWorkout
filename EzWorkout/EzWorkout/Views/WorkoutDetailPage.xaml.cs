@@ -26,7 +26,7 @@ namespace EzWorkout.Views
         {
             InitializeComponent();
 
-            var item = new Workout
+            var item = new Item
             {
                 Text = "Item 1",
                 Description = "This is an item description."

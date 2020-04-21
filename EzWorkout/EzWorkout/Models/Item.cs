@@ -2,7 +2,7 @@
 
 namespace EzWorkout.Models
 {
-    public class Workout
+    public class Item
     {
         public string Id { get; set; }
         public string Text { get; set; }

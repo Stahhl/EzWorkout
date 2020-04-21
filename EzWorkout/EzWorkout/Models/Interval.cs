@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EzWorkout.Models
 {
-    class Interval
+    public class Interval
     {
     }
 }

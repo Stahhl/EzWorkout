@@ -16,5 +16,21 @@ namespace EzWorkout.Views
         {
             InitializeComponent();
         }
+
+        private async void AddItem_Clicked(object sender, EventArgs e)
+        {
+            //await Navigation.PushModalAsync(new NavigationPage(new NewBookPage(viewModel)));
+        }
+        private async void Start_Clicked(object sender, EventArgs e)
+        {
+            //if (isLooping == true)
+            //    return;
+
+            //isLooping = true;
+
+            //await LoopItems();
+
+            //isLooping = false;
+        }
     }
 }
