@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EzWorkout.ViewModels
 {
-    public class WorkoutViewModel : BaseViewModel
+    class BrowseWorkoutsViewModel : BaseViewModel
     {
     }
 }

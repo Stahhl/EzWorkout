@@ -4,10 +4,10 @@ using EzWorkout.Models;
 
 namespace EzWorkout.ViewModels
 {
-    public class WorkoutDetailViewModel : BaseViewModel
+    public class ItemDetailViewModel : BaseViewModel
     {
         public Workout Item { get; set; }
-        public WorkoutDetailViewModel(Workout item = null)
+        public ItemDetailViewModel(Workout item = null)
         {
             Title = item?.Text;
             Item = item;

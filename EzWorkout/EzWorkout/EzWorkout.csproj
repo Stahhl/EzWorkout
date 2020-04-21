@@ -31,8 +31,11 @@
     <Compile Update="Views\WorkoutDetailPage.xaml.cs">
       <DependentUpon>WorkoutDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\WorkoutsPage.xaml.cs">
-      <DependentUpon>WorkoutsPage.xaml</DependentUpon>
-    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\BrowseWorkoutsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
