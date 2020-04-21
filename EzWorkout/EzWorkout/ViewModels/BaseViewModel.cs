@@ -12,7 +12,7 @@ namespace EzWorkout.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<Workout> DataStore => DependencyService.Get<IDataStore<Workout>>();
 
         bool isBusy = false;
         public bool IsBusy

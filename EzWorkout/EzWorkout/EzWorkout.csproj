@@ -20,9 +20,19 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Syncfusion.Licensing" Version="18.1.0.44" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.44" />
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+    <PackageReference Include="Syncfusion.Licensing" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.45" />
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\WorkoutDetailPage.xaml.cs">
+      <DependentUpon>WorkoutDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\WorkoutsPage.xaml.cs">
+      <DependentUpon>WorkoutsPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

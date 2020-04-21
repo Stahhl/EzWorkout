@@ -13,13 +13,13 @@ namespace EzWorkout.Views
     [DesignTimeVisible(false)]
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Workout Item { get; set; }
 
         public NewItemPage()
         {
             InitializeComponent();
 
-            Item = new Item
+            Item = new Workout
             {
                 Text = "Item name",
                 Description = "This is an item description."

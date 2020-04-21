@@ -13,9 +13,9 @@ namespace EzWorkout.Views
     [DesignTimeVisible(false)]
     public partial class ItemDetailPage : ContentPage
     {
-        ItemDetailViewModel viewModel;
+        WorkoutDetailViewModel viewModel;
 
-        public ItemDetailPage(ItemDetailViewModel viewModel)
+        public ItemDetailPage(WorkoutDetailViewModel viewModel)
         {
             InitializeComponent();
 
@@ -26,13 +26,13 @@ namespace EzWorkout.Views
         {
             InitializeComponent();
 
-            var item = new Item
+            var item = new Workout
             {
                 Text = "Item 1",
                 Description = "This is an item description."
             };
 
-            viewModel = new ItemDetailViewModel(item);
+            viewModel = new WorkoutDetailViewModel(item);
             BindingContext = viewModel;
         }
     }

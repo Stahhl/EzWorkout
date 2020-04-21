@@ -18,20 +18,20 @@ namespace EzWorkout.Views
     [DesignTimeVisible(false)]
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel viewModel;
+        WorkoutViewModel viewModel;
 
         public ItemsPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ItemsViewModel();
+            BindingContext = viewModel = new WorkoutViewModel();
         }
 
         async void OnItemSelected(object sender, EventArgs args)
         {
             var layout = (BindableObject)sender;
-            var item = (Item)layout.BindingContext;
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            var item = (Workout)layout.BindingContext;
+            await Navigation.PushAsync(new ItemDetailPage(new WorkoutDetailViewModel(item)));
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)

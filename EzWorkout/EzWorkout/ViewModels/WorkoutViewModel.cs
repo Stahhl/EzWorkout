@@ -10,20 +10,20 @@ using EzWorkout.Views;
 
 namespace EzWorkout.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class WorkoutViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Workout> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public WorkoutViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Workout>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<NewItemPage, Workout>(this, "AddItem", async (obj, item) =>
             {
-                var newItem = item as Item;
+                var newItem = item as Workout;
                 Items.Add(newItem);
                 await DataStore.AddItemAsync(newItem);
             });
