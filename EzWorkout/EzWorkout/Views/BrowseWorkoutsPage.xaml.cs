@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using EzWorkout.ViewModels;
 
 namespace EzWorkout.Views
 {
@@ -15,7 +15,11 @@ namespace EzWorkout.Views
         public BrowseWorkoutsPage()
         {
             InitializeComponent();
+
+            BindingContext = viewModel = new BrowseWorkoutsViewModel();
         }
+
+        private BrowseWorkoutsViewModel viewModel;
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {

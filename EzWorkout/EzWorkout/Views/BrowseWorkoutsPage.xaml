@@ -11,7 +11,7 @@
                            SelectionMode="Single"
                            SelectionGesture="DoubleTap"
                            SelectionBackgroundColor="#E4E4E4"
-                           ItemsSource="{Binding Books}"
+                           ItemsSource="{Binding Workouts}"
                            ItemSize="100"
                            DragStartMode="OnHold"
                            IsStickyFooter="True"
@@ -22,13 +22,13 @@
         </syncfusion:SfListView.DragDropController>
         <syncfusion:SfListView.ItemTemplate>
             <DataTemplate>
-                <Grid Padding="10" BackgroundColor="{Binding MyColor}">
+                <Grid Padding="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.4*" />
                         <RowDefinition Height="0.6*" />
                     </Grid.RowDefinitions>
-                    <Label Text="{Binding BookName}" FontAttributes="Bold" TextColor="Teal" FontSize="21" />
-                    <Label Text="{Binding BookDescription}" Grid.Row="1" TextColor="Teal" FontSize="15"/>
+                    <Label Text="{Binding Workout.Name}" FontAttributes="Bold" TextColor="Teal" FontSize="21" />
+                    <Label Text="{Binding NumberOfIntervals}" Grid.Row="1" TextColor="Teal" FontSize="15"/>
                 </Grid>
             </DataTemplate>
         </syncfusion:SfListView.ItemTemplate>

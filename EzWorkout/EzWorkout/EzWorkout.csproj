@@ -28,8 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\WorkoutDetailPage.xaml.cs">
-      <DependentUpon>WorkoutDetailPage.xaml</DependentUpon>
+    <Compile Update="Views\ItemDetailsPage.xaml.cs">
+      <DependentUpon>ItemDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ItemsPage.xaml.cs">
+      <DependentUpon>ItemsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
