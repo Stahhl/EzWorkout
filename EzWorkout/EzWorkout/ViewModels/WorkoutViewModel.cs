@@ -9,9 +9,16 @@ namespace EzWorkout.ViewModels
 {
     public class WorkoutViewModel : BaseViewModel
     {
-        public WorkoutViewModel()
+        public WorkoutViewModel(Workout workout)
         {
+            Intervals = new ObservableCollection<Interval>();
 
+            Workout = workout;
+
+            foreach (var interval in workout.Intervals)
+            {
+                Intervals.Add(interval);
+            }
         }
 
         private Workout workout;

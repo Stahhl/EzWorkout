@@ -17,9 +17,9 @@ namespace EzWorkout.ViewModels
         {
             workouts = new ObservableCollection<WorkoutViewModel>();
 
-            workouts.Add(new WorkoutViewModel() { Workout = new Workout() { Name = "New Workout 1" }, Intervals = new ObservableCollection<Interval>() });
-            workouts.Add(new WorkoutViewModel() { Workout = new Workout() { Name = "New Workout 2" }, Intervals = new ObservableCollection<Interval>() });
-            workouts.Add(new WorkoutViewModel() { Workout = new Workout() { Name = "New Workout 3" }, Intervals = new ObservableCollection<Interval>() });
+            workouts.Add(new WorkoutViewModel(new Workout() { Name = "New Workout 1" }));
+            workouts.Add(new WorkoutViewModel(new Workout() { Name = "New Workout 2" }));
+            workouts.Add(new WorkoutViewModel(new Workout() { Name = "New Workout 3" }));
         }
 
         private ObservableCollection<WorkoutViewModel> workouts;

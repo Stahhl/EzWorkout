@@ -36,8 +36,7 @@
             <DataTemplate>
                 <Grid>
                     <StackLayout Orientation="Horizontal" BackgroundColor="Black">
-                        <Button x:Name="btnAdd" Clicked="AddItem_Clicked" Text="ADD" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
-                        <Button x:Name="btnStart" Clicked="Start_Clicked" Text="START" BackgroundColor="LightGreen" HorizontalOptions="FillAndExpand" />
+                        <Button x:Name="BtnNewWorkout" Clicked="BtnNewWorkout" Text="New Workout" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
                     </StackLayout>
                 </Grid>
             </DataTemplate>

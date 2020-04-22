@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using EzWorkout.ViewModels;
+using Syncfusion.ListView.XForms;
 
 namespace EzWorkout.Views
 {
@@ -17,24 +18,22 @@ namespace EzWorkout.Views
             InitializeComponent();
 
             BindingContext = viewModel = new BrowseWorkoutsViewModel();
+
+            listView.SelectionChanged += SelectionChanged;
         }
 
         private BrowseWorkoutsViewModel viewModel;
 
-        private async void AddItem_Clicked(object sender, EventArgs e)
+        private async void BtnNewWorkout(object sender, EventArgs e)
         {
             //await Navigation.PushModalAsync(new NavigationPage(new NewBookPage(viewModel)));
         }
-        private async void Start_Clicked(object sender, EventArgs e)
+
+        private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
-            //if (isLooping == true)
-            //    return;
+            await Navigation.PushAsync(new WorkoutPage((WorkoutViewModel)listView.SelectedItem));
 
-            //isLooping = true;
-
-            //await LoopItems();
-
-            //isLooping = false;
+            listView.SelectedItem = null;
         }
     }
 }
