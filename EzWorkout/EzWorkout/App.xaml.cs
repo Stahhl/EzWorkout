@@ -15,7 +15,6 @@ namespace EzWorkout
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(AppSettingsManager.Settings["SyncFusionLicense"]);
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 
