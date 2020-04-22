@@ -21,5 +21,13 @@ namespace EzWorkout.Views
         }
 
         private WorkoutViewModel viewModel;
+
+        private async void AddItem_Clicked(object sender, EventArgs e)
+        {
+        }
+        private async void Start_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }

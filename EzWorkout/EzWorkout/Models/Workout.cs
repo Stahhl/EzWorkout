@@ -10,6 +10,10 @@ namespace EzWorkout.Models
         {
             Intervals = new List<Interval>();
         }
+        public Workout(List<Interval> intervals)
+        {
+            Intervals = intervals;
+        }
 
         public string Name { get; set; }
         public List<Interval> Intervals { get; set; }

@@ -1,4 +1,5 @@
 ﻿using EzWorkout.Models;
+using EzWorkout.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,9 +18,14 @@ namespace EzWorkout.ViewModels
         {
             workouts = new ObservableCollection<WorkoutViewModel>();
 
-            workouts.Add(new WorkoutViewModel(new Workout() { Name = "New Workout 1" }));
-            workouts.Add(new WorkoutViewModel(new Workout() { Name = "New Workout 2" }));
-            workouts.Add(new WorkoutViewModel(new Workout() { Name = "New Workout 3" }));
+            var list = new List<Interval>();
+            list.Add(new Interval() { Intensity = IntervalIntensity.INACTIVE, Type = IntervalType.DURATION, Amount = 100 });
+            list.Add(new Interval() { Intensity = IntervalIntensity.MEDIUM, Type = IntervalType.DISTANCE, Amount = 200 });
+            list.Add(new Interval() { Intensity = IntervalIntensity.HIGH, Type = IntervalType.DURATION, Amount = 500 });
+
+            workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "New Workout 1" }));
+            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "New Workout 2" }));
+            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "New Workout 3" }));
         }
 
         private ObservableCollection<WorkoutViewModel> workouts;

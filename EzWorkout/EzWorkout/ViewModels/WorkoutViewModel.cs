@@ -11,25 +11,25 @@ namespace EzWorkout.ViewModels
     {
         public WorkoutViewModel(Workout workout)
         {
-            Intervals = new ObservableCollection<Interval>();
+            Intervals = new ObservableCollection<IntervalViewModel>();
 
             Workout = workout;
 
             foreach (var interval in workout.Intervals)
             {
-                Intervals.Add(interval);
+                Intervals.Add(new IntervalViewModel(interval));
             }
         }
 
         private Workout workout;
-        private ObservableCollection<Interval> intervals;
+        private ObservableCollection<IntervalViewModel> intervals;
 
         public Workout Workout
         {
             get { return workout; }
             set { this.workout = value; }
         }
-        public ObservableCollection<Interval> Intervals
+        public ObservableCollection<IntervalViewModel> Intervals
         {
             get { return intervals; }
             set { this.intervals = value; }
