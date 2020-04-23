@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             Title="Browse"
              x:Class="EzWorkout.Views.BrowseWorkoutsPage">
     
     <syncfusion:SfListView x:Name="listView" 
@@ -36,7 +37,7 @@
             <DataTemplate>
                 <Grid>
                     <StackLayout Orientation="Horizontal" BackgroundColor="Black">
-                        <Button x:Name="BtnNewWorkout" Clicked="BtnNewWorkout" Text="New Workout" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
+                        <Button x:Name="BtnNewWorkout" Clicked="BtnNewWorkout" Text="New Workout"  TextColor="White" BackgroundColor="CornflowerBlue" HorizontalOptions="FillAndExpand" />
                     </StackLayout>
                 </Grid>
             </DataTemplate>

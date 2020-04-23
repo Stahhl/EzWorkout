@@ -23,9 +23,9 @@ namespace EzWorkout.ViewModels
             list.Add(new Interval() { Intensity = IntervalIntensity.MEDIUM, Type = IntervalType.DISTANCE, Amount = 200 });
             list.Add(new Interval() { Intensity = IntervalIntensity.HIGH, Type = IntervalType.DURATION, Amount = 500 });
 
-            workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "New Workout 1" }));
-            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "New Workout 2" }));
-            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "New Workout 3" }));
+            workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "Workout " + NumberOfWorkouts }));
+            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "Workout " + NumberOfWorkouts }));
+            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "Workout " + NumberOfWorkouts }));
         }
 
         private ObservableCollection<WorkoutViewModel> workouts;
@@ -34,6 +34,11 @@ namespace EzWorkout.ViewModels
         {
             get { return workouts; }
             set { this.workouts = value; }
+        }
+
+        public int NumberOfWorkouts
+        {
+            get { return workouts.Count + 1; }
         }
     }
 }
