@@ -13,28 +13,31 @@ namespace EzWorkout.ViewModels
         public IntervalViewModel(Interval _interval)
         {
             interval = _interval;
-
-            Intensity = (IntervalIntensity)_interval.Intensity;
-            Type = (IntervalType)_interval.Type;
-            Amount = _interval.Amount;
-
-            MyColor = Color.LightBlue;
+            color = Color.LightBlue;
         }
 
-        private Interval interval;
-        private Color myColor;
+        public Interval interval;
+        private Color color;
 
-        [Required]
-        public IntervalIntensity Intensity { get; set; }
-        [Required]
-        public IntervalType Type { get; set; }
-        [Required]
-        public int Amount { get; set; } //100m or 1s
-
-        public Color MyColor
+        public Color Color
         {
-            get { return myColor; }
-            set { SetProperty(ref myColor, value); }
+            get { return color; }
+            set { SetProperty(ref color, value); }
+        }
+        public IntervalIntensity Intensity
+        {
+            get { return interval.Intensity; }
+            set { SetProperty(ref interval.Intensity, value); }
+        }
+        public IntervalType Type
+        {
+            get { return interval.Type; }
+            set { SetProperty(ref interval.Type, value); }
+        }
+        public int Amount
+        {
+            get { return interval.Amount; }
+            set { SetProperty(ref interval.Amount, value); }
         }
     }
 }

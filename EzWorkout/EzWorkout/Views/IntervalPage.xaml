@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:services="clr-namespace:EzWorkout.Services;assembly=EzWorkout"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
+             x:Class="EzWorkout.Views.IntervalPage">
+
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15" Orientation="Vertical">
+            <Label Text="Intensity"/>
+            <services:EnumBindablePicker x:TypeArguments="services:IntervalIntensity" SelectedItem="{Binding Intensity}"/>
+            <Label Text="Type:"/>
+            <services:EnumBindablePicker x:TypeArguments="services:IntervalType" SelectedItem="{Binding Type}" x:Name="typePicker"/>
+            <Grid>
+                <syncfusion:SfTimePicker
+                    IsVisible="False"
+                    ShowHeader="False"
+                    x:Name="timePicker"
+                    PickerMode="Default" 
+                    Time="0:00:00"/>
+            </Grid>
+
+            <StackLayout VerticalOptions="End" Orientation="Horizontal">
+                <Button Text="Cancel" Clicked="BtnCancel" HorizontalOptions="FillAndExpand" BackgroundColor="IndianRed"></Button>
+                <Button Text="Save" Clicked="BtnSave" HorizontalOptions="FillAndExpand" BackgroundColor="LawnGreen"></Button>
+            </StackLayout>
+            
+        </StackLayout>
+
+    </ContentPage.Content>
+
+</ContentPage>

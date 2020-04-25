@@ -9,8 +9,8 @@ namespace EzWorkout.Models
 {
     public class Interval
     {
-        public IntervalIntensity Intensity { get; set; }
-        public IntervalType Type { get; set; }
-        public int Amount { get; set; } //100m or 1s
+        public IntervalIntensity Intensity;
+        public IntervalType Type;
+        public int Amount;
     }
 }
