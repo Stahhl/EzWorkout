@@ -25,7 +25,7 @@
         <syncfusion:SfListView.ItemTemplate>
             <DataTemplate>
 
-                <StackLayout Orientation="Horizontal" BackgroundColor="{Binding MyColor}" Margin="10" VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
                     <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
                     <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
                     <Label Text="{Binding Amount}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>

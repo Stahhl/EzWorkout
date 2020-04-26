@@ -31,6 +31,7 @@ namespace EzWorkout.Views
         }
 
         private WorkoutViewModel viewModel;
+        private bool isLooping;
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
@@ -40,7 +41,14 @@ namespace EzWorkout.Views
         }
         private async void Start_Clicked(object sender, EventArgs e)
         {
+            if (isLooping == true)
+                return;
 
+            isLooping = true;
+
+            await LoopItems();
+
+            isLooping = false;
         }
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
@@ -49,6 +57,26 @@ namespace EzWorkout.Views
                 viewModel));
 
             listView.SelectedItem = null;
+        }
+        private async Task LoopItems()
+        {
+            IntervalViewModel current = null;
+            IntervalViewModel last = null;
+
+            for (int i = 0; i < viewModel.Intervals.Count; i++)
+            {
+                current = viewModel.Intervals[i];
+
+                current.ToggleSelection();
+                if (last != null)
+                    last.ToggleSelection();
+
+                last = current;
+
+                await Task.Delay(1000);
+            }
+
+            last.ToggleSelection();
         }
     }
 }

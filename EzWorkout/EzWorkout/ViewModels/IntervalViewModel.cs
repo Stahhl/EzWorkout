@@ -13,11 +13,12 @@ namespace EzWorkout.ViewModels
         public IntervalViewModel(Interval _interval)
         {
             interval = _interval;
-            color = Color.LightBlue;
+            Color = Color.LightBlue;
         }
 
         public Interval interval;
         private Color color;
+        private bool isSelected;
 
         public Color Color
         {
@@ -38,6 +39,20 @@ namespace EzWorkout.ViewModels
         {
             get { return interval.Amount; }
             set { SetProperty(ref interval.Amount, value); }
+        }
+
+        public void ToggleSelection()
+        {
+            isSelected = !isSelected;
+
+            if (isSelected == true)
+            {
+                Color = Color.Green;
+            }
+            else
+            {
+                Color = Color.LightBlue;
+            }
         }
     }
 }
