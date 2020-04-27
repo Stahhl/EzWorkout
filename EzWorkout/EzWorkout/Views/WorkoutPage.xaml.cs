@@ -73,7 +73,7 @@ namespace EzWorkout.Views
 
                 last = current;
 
-                await Task.Delay(1000);
+                await current.Countdown();
             }
 
             last.ToggleSelection();

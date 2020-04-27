@@ -11,6 +11,8 @@ namespace EzWorkout.Models
     {
         public IntervalIntensity Intensity;
         public IntervalType Type;
-        public int Amount;
+
+
+        public TimeSpan Duration;
     }
 }

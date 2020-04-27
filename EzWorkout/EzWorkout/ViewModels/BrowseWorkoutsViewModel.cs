@@ -19,9 +19,9 @@ namespace EzWorkout.ViewModels
             workouts = new ObservableCollection<WorkoutViewModel>();
 
             var list = new List<Interval>();
-            list.Add(new Interval() { Intensity = IntervalIntensity.INACTIVE, Type = IntervalType.DURATION, Amount = 10 });
-            list.Add(new Interval() { Intensity = IntervalIntensity.MEDIUM, Type = IntervalType.DISTANCE, Amount = 20 });
-            list.Add(new Interval() { Intensity = IntervalIntensity.HIGH, Type = IntervalType.DURATION, Amount = 30 });
+            list.Add(new Interval() { Intensity = IntervalIntensity.INACTIVE, Type = IntervalType.DURATION, Duration = TimeSpan.FromSeconds(10) });
+            list.Add(new Interval() { Intensity = IntervalIntensity.MEDIUM, Type = IntervalType.DURATION, Duration = TimeSpan.FromSeconds(10) });
+            list.Add(new Interval() { Intensity = IntervalIntensity.HIGH, Type = IntervalType.DURATION, Duration = TimeSpan.FromSeconds(10) });
 
             workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "Workout " + NumberOfWorkouts }));
             workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "Workout " + NumberOfWorkouts }));

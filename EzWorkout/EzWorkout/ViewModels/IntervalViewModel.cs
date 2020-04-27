@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
@@ -35,10 +36,10 @@ namespace EzWorkout.ViewModels
             get { return interval.Type; }
             set { SetProperty(ref interval.Type, value); }
         }
-        public int Amount
+        public TimeSpan Duration
         {
-            get { return interval.Amount; }
-            set { SetProperty(ref interval.Amount, value); }
+            get { return interval.Duration; }
+            set { SetProperty(ref interval.Duration, value); }
         }
 
         public void ToggleSelection()
@@ -52,6 +53,17 @@ namespace EzWorkout.ViewModels
             else
             {
                 Color = Color.LightBlue;
+            }
+        }
+        public async Task Countdown()
+        {
+            int ms = 1000;
+
+            while (Duration.TotalSeconds > 0)
+            {
+                await Task.Delay(ms);
+
+                Duration = Duration.Subtract(TimeSpan.FromMilliseconds(ms));
             }
         }
     }

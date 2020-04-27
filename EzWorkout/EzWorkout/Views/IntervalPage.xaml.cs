@@ -61,7 +61,7 @@ namespace EzWorkout.Views
         private void timeChanged(object sender, EventArgs e)
         {
             if (timePicker.Time > TimeSpan.Zero)
-                viewModel.Amount = (int)timePicker.Time.TotalSeconds;
+                viewModel.Duration = TimeSpan.FromSeconds(timePicker.Time.TotalSeconds);
         }
 
 
@@ -84,7 +84,7 @@ namespace EzWorkout.Views
             if (
                 viewModel.Intensity == 0 ||
                 viewModel.Type == 0 ||
-                viewModel.Amount == 0
+                viewModel.Duration == TimeSpan.Zero
                 )
                 return true;
 

@@ -28,7 +28,7 @@
                 <StackLayout Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
                     <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
                     <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
-                    <Label Text="{Binding Amount}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+                    <Label Text="{Binding Duration}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
                 </StackLayout>
 
             </DataTemplate>
