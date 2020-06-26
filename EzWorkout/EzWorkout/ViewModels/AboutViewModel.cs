@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class AboutViewModel : _BaseViewModel
     {
         public AboutViewModel()
         {

@@ -10,7 +10,7 @@ using EzWorkout.Services;
 
 namespace EzWorkout.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class _BaseViewModel : INotifyPropertyChanged
     {
         bool isBusy = false;
         public bool IsBusy

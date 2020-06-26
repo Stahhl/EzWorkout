@@ -65,11 +65,11 @@ namespace EzWorkout.Views
         }
 
 
-        async void BtnCancel(object sender, EventArgs e)
+        private async void BtnCancel(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
         }
-        async void BtnSave(object sender, EventArgs e)
+        private async void BtnSave(object sender, EventArgs e)
         {
             if (hasErrors())
                 return;

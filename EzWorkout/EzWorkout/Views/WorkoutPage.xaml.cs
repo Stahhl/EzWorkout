@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace EzWorkout.Views
@@ -26,12 +28,10 @@ namespace EzWorkout.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            //listView.ItemsSource = viewModel.Intervals;
         }
 
         private WorkoutViewModel viewModel;
-        private bool isLooping;
+        private CancellationTokenSource cts;
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
@@ -39,16 +39,27 @@ namespace EzWorkout.Views
 
             listView.SelectedItem = null;
         }
-        private async void Start_Clicked(object sender, EventArgs e)
+        private void Start_Clicked(object sender, EventArgs e)
         {
-            if (isLooping == true)
-                return;
+            if(cts != null)
+            {
+                cts.Cancel();
+                cts = null;
 
-            isLooping = true;
+                viewModel.StartBtnText = "START";
+            }
+            else
+            {
+                cts = new CancellationTokenSource();
 
-            await LoopItems();
+                Task.Run(() => LoopItems());
 
-            isLooping = false;
+                viewModel.StartBtnText = "RESET";
+            }
+        }
+        private void ToggleStartBtnText()
+        {
+            viewModel.StartBtnText = cts != null ? "" : "";
         }
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
@@ -58,25 +69,52 @@ namespace EzWorkout.Views
 
             listView.SelectedItem = null;
         }
+
         private async Task LoopItems()
         {
             IntervalViewModel current = null;
             IntervalViewModel last = null;
 
-            for (int i = 0; i < viewModel.Intervals.Count; i++)
+            try
             {
-                current = viewModel.Intervals[i];
+                for (int i = 0; i < viewModel.Intervals.Count; i++)
+                {
 
-                current.ToggleSelection();
+                    current = viewModel.Intervals[i];
+
+                    current.ToggleSelection();
+
+                    if (last != null)
+                        last.ToggleSelection();
+
+                    last = current;
+
+                    await current.Countdown(cts);
+                }
+
+                last.ToggleSelection();
+
+                Reset();
+            }
+            catch(TaskCanceledException)
+            {
                 if (last != null)
                     last.ToggleSelection();
 
-                last = current;
-
-                await current.Countdown();
+                Reset();
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-            last.ToggleSelection();
+        private void Reset()
+        {
+            foreach (var interval in viewModel.Intervals)
+            {
+                interval.Reset();
+            }
         }
     }
 }

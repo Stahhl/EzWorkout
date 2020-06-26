@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
 {
-    public class WorkoutViewModel : BaseViewModel
+    public class WorkoutViewModel : _BaseViewModel
     {
         public WorkoutViewModel(Workout workout)
         {
@@ -24,6 +24,12 @@ namespace EzWorkout.ViewModels
         private Workout workout;
         private ObservableCollection<IntervalViewModel> intervals;
 
+        private string _startBtnText = "START";
+        public string StartBtnText
+        {
+            get { return _startBtnText; }
+            set { SetProperty(ref _startBtnText, value); }
+        }
         public Workout Workout
         {
             get { return workout; }

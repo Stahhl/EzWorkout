@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
 {
-    public class IntervalViewModel : BaseViewModel
+    public class IntervalViewModel : _BaseViewModel
     {
         public IntervalViewModel(Interval _interval)
         {
@@ -18,13 +19,13 @@ namespace EzWorkout.ViewModels
         }
 
         public Interval interval;
-        private Color color;
-        private bool isSelected;
+        private Color _color;
+        private bool _isSelected;
 
         public Color Color
         {
-            get { return color; }
-            set { SetProperty(ref color, value); }
+            get { return _color; }
+            set { SetProperty(ref _color, value); }
         }
         public IntervalIntensity Intensity
         {
@@ -38,15 +39,20 @@ namespace EzWorkout.ViewModels
         }
         public TimeSpan Duration
         {
-            get { return interval.Duration; }
-            set { SetProperty(ref interval.Duration, value); }
+            get { return interval.CurrentDuration; }
+            set { SetProperty(ref interval.CurrentDuration, value); }
+        }
+        public int Distance
+        {
+            get { return interval.CurrentDistance; }
+            set { SetProperty(ref interval.CurrentDistance, value); }
         }
 
         public void ToggleSelection()
         {
-            isSelected = !isSelected;
+            _isSelected = !_isSelected;
 
-            if (isSelected == true)
+            if (_isSelected == true)
             {
                 Color = Color.Green;
             }
@@ -55,16 +61,31 @@ namespace EzWorkout.ViewModels
                 Color = Color.LightBlue;
             }
         }
-        public async Task Countdown()
+        public async Task Countdown(CancellationTokenSource cts)
         {
-            int ms = 1000;
-
-            while (Duration.TotalSeconds > 0)
+            try
             {
-                await Task.Delay(ms);
+                int ms = 1000;
 
-                Duration = Duration.Subtract(TimeSpan.FromMilliseconds(ms));
+                while (Duration.TotalSeconds > 0)
+                {
+                    if (cts.IsCancellationRequested)
+                        throw new TaskCanceledException();
+
+                    await Task.Delay(ms);
+
+                    Duration = Duration.Subtract(TimeSpan.FromMilliseconds(ms));
+                }
             }
+            catch (TaskCanceledException tcex)
+            {
+                throw tcex;
+            }
+        }
+        public void Reset()
+        {
+            Duration = interval.Duration;
+            Distance = interval.Distance;
         }
     }
 }
