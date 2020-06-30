@@ -63,23 +63,16 @@ namespace EzWorkout.ViewModels
         }
         public async Task Countdown(CancellationTokenSource cts)
         {
-            try
+            int ms = 1000;
+
+            while (Duration.TotalSeconds > 0)
             {
-                int ms = 1000;
+                if (cts.IsCancellationRequested)
+                    throw new TaskCanceledException();
 
-                while (Duration.TotalSeconds > 0)
-                {
-                    if (cts.IsCancellationRequested)
-                        throw new TaskCanceledException();
+                await Task.Delay(ms);
 
-                    await Task.Delay(ms);
-
-                    Duration = Duration.Subtract(TimeSpan.FromMilliseconds(ms));
-                }
-            }
-            catch (TaskCanceledException tcex)
-            {
-                throw tcex;
+                Duration = Duration.Subtract(TimeSpan.FromMilliseconds(ms));
             }
         }
         public void Reset()

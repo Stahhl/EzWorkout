@@ -46,7 +46,7 @@ namespace EzWorkout.Views
                 cts.Cancel();
                 cts = null;
 
-                viewModel.StartBtnText = "START";
+                viewModel.BtnStartText = "START";
             }
             else
             {
@@ -54,13 +54,10 @@ namespace EzWorkout.Views
 
                 Task.Run(() => LoopItems());
 
-                viewModel.StartBtnText = "RESET";
+                viewModel.BtnStartText = "RESET";
             }
         }
-        private void ToggleStartBtnText()
-        {
-            viewModel.StartBtnText = cts != null ? "" : "";
-        }
+
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
             await Navigation.PushAsync(new IntervalPage(
