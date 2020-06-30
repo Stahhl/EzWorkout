@@ -31,8 +31,7 @@ namespace EzWorkout.Views
             typePicker.SelectedIndexChanged += typeChanged;
             timePicker.TimeSelected += timeChanged;
 
-            if (viewModel.Type == IntervalType.DURATION)
-                timePicker.IsVisible = true;
+            timePicker.IsVisible = viewModel.Type == IntervalType.DURATION ? true : false;
         }
         protected override void OnAppearing()
         {
@@ -45,10 +44,10 @@ namespace EzWorkout.Views
 
         private void typeChanged(object sender, EventArgs e)
         {
-            if (typePicker.SelectedItem == IntervalType.NULL)
-            {
-                timePicker.IsVisible = false;
-            }
+            //if (typePicker.SelectedItem == IntervalType.NULL)
+            //{
+            //    timePicker.IsVisible = false;
+            //}
             if (typePicker.SelectedItem == IntervalType.DISTANCE)
             {
                 timePicker.IsVisible = false;

@@ -10,10 +10,13 @@ namespace EzWorkout.Services
         public EnumBindablePicker()
         {
             SelectedIndexChanged += OnSelectedIndexChanged;
-            //Fill the Items from the enum
-            foreach (var value in Enum.GetValues(typeof(T)))
+
+            var arr = Enum.GetValues(typeof(T));
+
+            //Skip the first enum "NULL"
+            for (int i = 1; i < arr.Length; i++)
             {
-                Items.Add(value.ToString());
+               Items.Add(arr.GetValue(i).ToString());
             }
         }
 

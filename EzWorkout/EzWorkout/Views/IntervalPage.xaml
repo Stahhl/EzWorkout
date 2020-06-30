@@ -9,7 +9,7 @@
              x:Class="EzWorkout.Views.IntervalPage">
 
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15" Orientation="Vertical">
+        <StackLayout VerticalOptions="EndAndExpand" Spacing="20" Padding="15" Orientation="Vertical">
             <Label Text="Intensity"/>
             <services:EnumBindablePicker x:TypeArguments="services:IntervalIntensity" SelectedItem="{Binding Intensity}"/>
             <Label Text="Type:"/>
@@ -23,7 +23,7 @@
                     Time="0:00:00"/>
             </Grid>
 
-            <StackLayout VerticalOptions="End" Orientation="Horizontal">
+            <StackLayout VerticalOptions="EndAndExpand" Orientation="Horizontal">
                 <Button Text="Cancel" Clicked="BtnCancel" HorizontalOptions="FillAndExpand" BackgroundColor="IndianRed"></Button>
                 <Button Text="Save" Clicked="BtnSave" HorizontalOptions="FillAndExpand" BackgroundColor="LawnGreen"></Button>
             </StackLayout>
