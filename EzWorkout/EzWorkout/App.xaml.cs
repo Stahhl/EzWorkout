@@ -13,6 +13,8 @@ namespace EzWorkout
         {
             InitializeComponent();
 
+            //app needs a "appsettings.json" in root
+            //"appsettings.json" is in gitignore
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(AppSettingsManager.Settings["SyncFusionLicense"]);
 
             MainPage = new MainPage();

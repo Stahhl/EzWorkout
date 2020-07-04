@@ -18,4 +18,10 @@ namespace EzWorkout.Services
         DURATION,
         DISTANCE
     }
+    public enum AppPage
+    {
+        Browse,
+        About
+    }
+
 }

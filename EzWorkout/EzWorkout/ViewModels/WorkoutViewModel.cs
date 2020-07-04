@@ -27,7 +27,7 @@ namespace EzWorkout.ViewModels
         private void OnIntervalsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(Intervals));
-            OnPropertyChanged(nameof(NumberOfIntervals));
+            OnPropertyChanged(nameof(Description));
         }
 
         private Workout _workout;
@@ -51,9 +51,9 @@ namespace EzWorkout.ViewModels
         {
             get { return _intervals; }
         }
-        public int NumberOfIntervals
+        public string Description
         {
-            get { return _intervals.Count; }
+            get { return $"{_intervals.Count} intervals"; }
         }
     }
 }

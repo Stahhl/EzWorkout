@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace EzWorkout.Services
 {
+    //https://www.andrewhoefling.com/Blog/Post/xamarin-app-configuration-control-your-app-settings
     public class AppSettingsManager
     {
         private static AppSettingsManager _instance;

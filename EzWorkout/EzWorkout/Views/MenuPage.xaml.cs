@@ -1,7 +1,10 @@
 ﻿using EzWorkout.Models;
+using EzWorkout.Services;
+using Syncfusion.DataSource.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,28 +15,25 @@ namespace EzWorkout.Views
     [DesignTimeVisible(false)]
     public partial class MenuPage : ContentPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
-        List<HomeMenuItem> menuItems;
+        private MainPage _rootPage { get => Application.Current.MainPage as MainPage; }
+        private List<AppPage> _menuItems;
+
         public MenuPage()
         {
             InitializeComponent();
 
-            menuItems = new List<HomeMenuItem>
-            {
-                new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
-                new HomeMenuItem {Id = MenuItemType.About, Title="About" }
-            };
+            _menuItems = Enum.GetValues(typeof(AppPage)).OfType<AppPage>().ToList();
 
-            ListViewMenu.ItemsSource = menuItems;
+            ListViewMenu.ItemsSource = _menuItems;
 
-            ListViewMenu.SelectedItem = menuItems[0];
+            ListViewMenu.SelectedItem = _menuItems[0];
             ListViewMenu.ItemSelected += async (sender, e) =>
             {
                 if (e.SelectedItem == null)
                     return;
 
-                var id = (int)((HomeMenuItem)e.SelectedItem).Id;
-                await RootPage.NavigateFromMenu(id);
+                var id = (int)((AppPage)e.SelectedItem);
+                await _rootPage.NavigateFromMenu(id);
             };
         }
     }

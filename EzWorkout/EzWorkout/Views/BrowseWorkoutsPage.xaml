@@ -29,7 +29,7 @@
                         <RowDefinition Height="0.6*" />
                     </Grid.RowDefinitions>
                     <Label Text="{Binding Workout.Name}" FontAttributes="Bold" TextColor="Teal" FontSize="21" />
-                    <Label Text="{Binding NumberOfIntervals}" Grid.Row="1" TextColor="Teal" FontSize="15"/>
+                    <Label Text="{Binding Description}" Grid.Row="1" TextColor="Teal" FontSize="15"/>
                 </Grid>
             </DataTemplate>
         </syncfusion:SfListView.ItemTemplate>
