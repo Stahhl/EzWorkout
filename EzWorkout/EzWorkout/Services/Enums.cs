@@ -20,7 +20,9 @@ namespace EzWorkout.Services
     }
     public enum AppPage
     {
-        Browse,
+        Home,
+        Workouts,
+        Stopwatch,
         About
     }
 

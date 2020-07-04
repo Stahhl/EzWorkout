@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 
 using EzWorkout.Models;
 using EzWorkout.Services;
+using System.Linq;
 
 namespace EzWorkout.Views
 {
@@ -18,25 +19,42 @@ namespace EzWorkout.Views
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
+            //Start page set in xaml
+
             InitializeComponent();
 
             MasterBehavior = MasterBehavior.Popover;
 
-            MenuPages.Add((int)AppPage.Browse, (NavigationPage)Detail);
+            //MenuPages.Add((int)AppPage.Home, (NavigationPage)Detail);
         }
 
         public async Task NavigateFromMenu(int id)
         {
-            if (!MenuPages.ContainsKey(id))
+            ContentPage newPage = null;
+
+            switch (id)
             {
-                throw new Exception("Page doesn't exist!");
+                case (int)AppPage.Home:
+                    newPage = new HomePage();
+                    break;
+                case (int)AppPage.Workouts:
+                    newPage = new BrowseWorkoutsPage();
+                    break;
+                case (int)AppPage.Stopwatch:
+                    newPage = new StopwatchPage();
+                    break;
+                case (int)AppPage.About:
+                    newPage = new AboutPage();
+                    break;
+                default:
+                    throw new Exception("Page doesn't exist!");
             }
 
-            var newPage = MenuPages[id];
+            var newNavPage = new NavigationPage(newPage);
 
-            if (newPage != null && Detail != newPage)
+            if (newNavPage != null && Detail != newNavPage)
             {
-                Detail = newPage;
+                Detail = newNavPage;
 
                 if (Device.RuntimePlatform == Device.Android)
                     await Task.Delay(100);

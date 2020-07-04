@@ -22,7 +22,7 @@ namespace EzWorkout.Views
         {
             InitializeComponent();
 
-            _menuItems = Enum.GetValues(typeof(AppPage)).OfType<AppPage>().ToList();
+            _menuItems = Enum.GetValues(typeof(AppPage)).Cast<AppPage>().ToList();
 
             ListViewMenu.ItemsSource = _menuItems;
 
