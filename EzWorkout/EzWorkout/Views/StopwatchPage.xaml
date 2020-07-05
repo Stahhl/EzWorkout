@@ -25,7 +25,7 @@
                 <Label
                     Text="Distance:" />
                 <Label
-                    Text="100 m"
+                    Text="{Binding Distance}"
                     x:Name="Label_Distance" FontSize="45" TextColor="Black"/>
 
             </StackLayout>
@@ -40,7 +40,7 @@
             <!--Control Buttons-->
             <StackLayout VerticalOptions="End" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                 <Button x:Name="Button_Reset" Text="RESET" HorizontalOptions="FillAndExpand"></Button>
-                <Button x:Name="Button_Start" Text="START" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="Button_Start" Text="{Binding ButtonText_StartStop}" HorizontalOptions="FillAndExpand"></Button>
 
             </StackLayout>
             
