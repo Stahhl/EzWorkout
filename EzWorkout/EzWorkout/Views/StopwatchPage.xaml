@@ -6,10 +6,45 @@
              mc:Ignorable="d"
              x:Class="EzWorkout.Views.StopwatchPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        
+        <StackLayout Padding="10">
+            
+            <!--Duration-->
+            <StackLayout x:Name="Stack_Duration" VerticalOptions="Start" Padding="65,15,0,0">
+                <Label
+                    Text="Duration:"
+                    VerticalOptions="CenterAndExpand" />
+                <Label
+                    Text="{Binding Duration}"
+                    x:Name="Label_Duration" FontSize="45" TextColor="Black" />
+
+            </StackLayout>
+
+            <!--Distance-->
+            <StackLayout x:Name="Stack_Distance" VerticalOptions="FillAndExpand" Padding="65,0,0,0" IsVisible="False">
+                <Label
+                    Text="Distance:" />
+                <Label
+                    Text="100 m"
+                    x:Name="Label_Distance" FontSize="45" TextColor="Black"/>
+
+            </StackLayout>
+
+            <!--Toggle Distance-->
+            <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Orientation="Horizontal" Scale="1.3">
+                <Label Text="Distance" Margin="0,3,0,0"></Label>
+                <Switch x:Name="Switch_ToggleDistance"></Switch>
+
+            </StackLayout>
+
+            <!--Control Buttons-->
+            <StackLayout VerticalOptions="End" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                <Button x:Name="Button_Reset" Text="RESET" HorizontalOptions="FillAndExpand"></Button>
+                <Button x:Name="Button_Start" Text="START" HorizontalOptions="FillAndExpand"></Button>
+
+            </StackLayout>
+            
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

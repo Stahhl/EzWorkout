@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EzWorkout.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,17 @@ namespace EzWorkout.Views
         public StopwatchPage()
         {
             InitializeComponent();
+
+            BindingContext = viewModel = new StopwatchViewModel();
+
+            Switch_ToggleDistance.Toggled += ToggleDistance;
+        }
+
+        private StopwatchViewModel viewModel;
+
+        private void ToggleDistance(object sender, ToggledEventArgs e)
+        {
+            Stack_Distance.IsVisible = Switch_ToggleDistance.IsToggled;
         }
     }
 }
