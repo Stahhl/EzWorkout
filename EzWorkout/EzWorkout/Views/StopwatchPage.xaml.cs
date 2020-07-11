@@ -39,6 +39,7 @@ namespace EzWorkout.Views
         private void ToggleDistance(object sender, ToggledEventArgs e)
         {
             Stack_Distance.IsVisible = Switch_ToggleDistance.IsToggled;
+            viewModel.TrackDistance = !viewModel.TrackDistance;
         }
     }
 }

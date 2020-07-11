@@ -1,7 +1,10 @@
-﻿using System;
+﻿using EzWorkout.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
@@ -14,6 +17,10 @@ namespace EzWorkout.ViewModels
         }
 
         private Stopwatch _stopWatch;
+        private GpsManager _gpsManager;
+        private CancellationTokenSource _cts;
+
+        public bool TrackDistance;
 
         private string _duration;
         private string _distance;
@@ -52,21 +59,50 @@ namespace EzWorkout.ViewModels
                     else
                         return true;
                 });
+
+                if(TrackDistance == true)
+                {
+                    Task.Run(() => UpdateDistance());
+                }
             }
             else
             {
-                _stopWatch.Stop();
-
-                ButtonText_StartStop = "START";
+                Pause();
             }
+        }
+
+        private void UpdateDistance()
+        {
+            while(_cts.IsCancellationRequested == false)
+            {
+                var dist = _gpsManager.GetDistance(new CancellationTokenSource());
+                dist.Wait();
+
+                Distance = dist.Result + " km";
+
+            }
+        }
+
+        public void Pause()
+        {
+            if (_cts != null)
+                _cts.Cancel();
+
+            _stopWatch.Stop();
+            ButtonText_StartStop = "RESUME";
         }
         public void Reset()
         {
+            if (_cts != null)
+                _cts.Cancel();
+
             Duration = "00:00:00.000";
-            Distance = "0 m";
+            Distance = "0 km";
             ButtonText_StartStop = "START";
 
             _stopWatch = new Stopwatch();
+            _gpsManager = new GpsManager();
+            _cts = new CancellationTokenSource();
         }
 
     }
