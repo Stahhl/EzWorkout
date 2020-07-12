@@ -46,44 +46,37 @@ namespace EzWorkout.ViewModels
         {
             if (_stopWatch.IsRunning == false)
             {
-                _stopWatch.Start();
-
-                ButtonText_StartStop = "STOP";
-
-                Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
-                {
-                    Duration = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
-
-                    if (_stopWatch.IsRunning == false)
-                        return false;
-                    else
-                        return true;
-                });
-
-                if(TrackDistance == true)
-                {
-                    Task.Run(() => UpdateDistance());
-                }
+                Start();
             }
             else
             {
-                Pause();
+                Stop();
             }
         }
 
-        private void UpdateDistance()
+        public void Start()
         {
-            while(_cts.IsCancellationRequested == false)
+            _stopWatch.Start();
+            _cts = new CancellationTokenSource();
+
+            ButtonText_StartStop = "STOP";
+
+            Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
             {
-                var dist = _gpsManager.GetDistance(new CancellationTokenSource());
-                dist.Wait();
+                Duration = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
 
-                Distance = dist.Result + " km";
+                if (_stopWatch.IsRunning == false)
+                    return false;
+                else
+                    return true;
+            });
 
+            if (TrackDistance == true)
+            {
+                Task.Run(() => UpdateDistance());
             }
         }
-
-        public void Pause()
+        public void Stop()
         {
             if (_cts != null)
                 _cts.Cancel();
@@ -97,12 +90,22 @@ namespace EzWorkout.ViewModels
                 _cts.Cancel();
 
             Duration = "00:00:00.000";
-            Distance = "0 km";
+            Distance = "0 m";
             ButtonText_StartStop = "START";
 
             _stopWatch = new Stopwatch();
             _gpsManager = new GpsManager();
             _cts = new CancellationTokenSource();
+        }
+        private void UpdateDistance()
+        {
+            while (_cts.IsCancellationRequested == false)
+            {
+                var dist = _gpsManager.TrackDistance(new CancellationTokenSource());
+                dist.Wait();
+
+                Distance = Humanizer.DistanceFromKm(dist.Result);
+            }
         }
 
     }

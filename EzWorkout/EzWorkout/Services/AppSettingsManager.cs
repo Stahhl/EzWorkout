@@ -11,13 +11,21 @@ namespace EzWorkout.Services
         private static AppSettingsManager _instance;
         private JObject _secrets;
 
-        private const string Namespace = "EzWorkout";
-        private const string FileName = "appsettings.json";
+        private readonly string Namespace = "EzWorkout.Configuration";
+        private readonly string FileName = "appsettings.json";
 
         private AppSettingsManager()
         {
+            #region conditional compilation
+#if RELEASE
+            FileName = "appsettings.RELEASE.json";
+#else
+            FileName = "appsettings.DEBUG.json";
+#endif
+            #endregion
             try
             {
+
                 var assembly = IntrospectionExtensions.GetTypeInfo(typeof(AppSettingsManager)).Assembly;
                 var stream = assembly.GetManifestResourceStream($"{Namespace}.{FileName}");
                 using (var reader = new StreamReader(stream))

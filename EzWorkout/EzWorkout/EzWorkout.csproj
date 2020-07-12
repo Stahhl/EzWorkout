@@ -10,12 +10,18 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Configuration\appsettings.RELEASE.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="Configuration\appsettings.RELEASE.json" />
+    <EmbeddedResource Include="Configuration\appsettings.DEBUG.json" />
   </ItemGroup>
 
   <ItemGroup>

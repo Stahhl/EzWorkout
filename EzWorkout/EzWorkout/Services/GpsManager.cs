@@ -10,15 +10,21 @@ namespace EzWorkout.Services
 {
     public class GpsManager
     {
-        private readonly GeolocationAccuracy accuracy = GeolocationAccuracy.High;
+        public GpsManager()
+        {
+            _spoofDistance = double.Parse(AppSettingsManager.Settings["SpoofDistance"]);
+        }
+
+        private const GeolocationAccuracy accuracy = GeolocationAccuracy.High;
 
         private Location _last;
         private Location _current;
         private CancellationTokenSource _cts;
 
+        private double _spoofDistance;
         private double _totalDistance;
 
-        public async Task<double> GetDistance(CancellationTokenSource cts)
+        public async Task<double> TrackDistance(CancellationTokenSource cts)
         {
             try
             {
@@ -30,10 +36,10 @@ namespace EzWorkout.Services
                 _current = await GetLocation();
 
                 double dist = _last == null ? 0 : Location.CalculateDistance(_last, _current, DistanceUnits.Kilometers);
+                _totalDistance += dist + _spoofDistance;
 
-                await Task.Delay(500);
-
-                return _totalDistance + dist;
+                await Task.Delay(1000);
+                return _totalDistance;
             }
             catch (Exception ex)
             {
