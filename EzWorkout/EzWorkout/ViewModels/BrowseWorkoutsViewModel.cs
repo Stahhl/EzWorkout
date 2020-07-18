@@ -18,10 +18,10 @@ namespace EzWorkout.ViewModels
         {
             workouts = new ObservableCollection<WorkoutViewModel>();
 
-            var list = new List<Interval>();
-            list.Add(new Interval(IntervalIntensity.INACTIVE, TimeSpan.FromSeconds(10)));
-            list.Add(new Interval(IntervalIntensity.MEDIUM, TimeSpan.FromSeconds(10)));
-            list.Add(new Interval(IntervalIntensity.HIGH, TimeSpan.FromSeconds(10)));
+            var list = new List<_Interval>();
+            list.Add(new DurationInterval(IntervalIntensity.INACTIVE, TimeSpan.FromSeconds(10)));
+            list.Add(new DurationInterval(IntervalIntensity.MEDIUM, TimeSpan.FromSeconds(10)));
+            list.Add(new DurationInterval(IntervalIntensity.HIGH, TimeSpan.FromSeconds(10)));
 
 
             workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "Workout " + NumberOfWorkouts }));

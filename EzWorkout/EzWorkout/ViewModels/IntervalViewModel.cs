@@ -2,6 +2,7 @@
 using EzWorkout.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading;
@@ -12,16 +13,26 @@ namespace EzWorkout.ViewModels
 {
     public class IntervalViewModel : _BaseViewModel
     {
-        public IntervalViewModel(Interval _interval)
+        public IntervalViewModel(_Interval _interval)
         {
             interval = _interval;
             Color = Color.LightBlue;
+
+            Types = new ObservableCollection<string>();
+            var arr = Enum.GetValues(typeof(IntervalType));
+
+            //Skip the first enum "NULL"
+            for (int i = 1; i < arr.Length; i++)
+            {
+                Types.Add(arr.GetValue(i).ToString());
+            }
         }
 
-        public Interval interval;
+        public _Interval interval;
         private Color _color;
         private bool _isSelected;
 
+        public ObservableCollection<string> Types { get; private set; }
         public Color Color
         {
             get { return _color; }

@@ -8,15 +8,15 @@ namespace EzWorkout.Models
     {
         public Workout()
         {
-            Intervals = new List<Interval>();
+            Intervals = new List<_Interval>();
         }
-        public Workout(List<Interval> intervals)
+        public Workout(List<_Interval> intervals)
         {
             Intervals = intervals;
         }
 
         public string Name { get; set; }
-        public List<Interval> Intervals { get; set; }
+        public List<_Interval> Intervals { get; set; }
 
     }
 }

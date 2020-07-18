@@ -1,4 +1,5 @@
 ﻿using EzWorkout.Models;
+using EzWorkout.Services;
 using EzWorkout.ViewModels;
 using Syncfusion.ListView.XForms;
 using System;
@@ -24,6 +25,10 @@ namespace EzWorkout.Views
             BindingContext = viewModel = workoutViewModel;
 
             listView.SelectionChanged += SelectionChanged;
+            var arr1 = Enum.GetNames(typeof(IntervalType));
+            arr = new string[arr1.Length - 1];
+
+            Array.Copy(arr1, 1, arr, 0, arr1.Length - 1);
         }
         protected override void OnAppearing()
         {
@@ -32,16 +37,36 @@ namespace EzWorkout.Views
 
         private WorkoutViewModel viewModel;
         private CancellationTokenSource cts;
+        private string[] arr;
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new IntervalPage(null, viewModel));
-
             listView.SelectedItem = null;
+
+            string action = await DisplayActionSheet("Type: ", "Cancel", null, arr);
+            var parse = Enum.TryParse(action, out IntervalType result);
+
+            if (parse == false)
+                return;
+
+            switch (result)
+            {
+                case IntervalType.DISTANCE:
+                    await Navigation.PushAsync(new IntervalPage(viewModel, result));
+                    break;
+                case IntervalType.DURATION:
+                    await Navigation.PushAsync(new IntervalPage(viewModel, result));
+                    break;
+                case IntervalType.GOTO:
+                    await Navigation.PushAsync(new IntervalPage(viewModel, result));
+                    break;
+                default:
+                    throw new Exception("DEFAULT");
+            }
         }
         private void Start_Clicked(object sender, EventArgs e)
         {
-            if(cts != null)
+            if (cts != null)
             {
                 cts.Cancel();
                 cts = null;
@@ -60,9 +85,7 @@ namespace EzWorkout.Views
 
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
-            await Navigation.PushAsync(new IntervalPage(
-                (IntervalViewModel)listView.SelectedItem, 
-                viewModel));
+            await Navigation.PushAsync(new IntervalPage(viewModel));
 
             listView.SelectedItem = null;
         }
@@ -93,7 +116,7 @@ namespace EzWorkout.Views
 
                 Reset();
             }
-            catch(TaskCanceledException)
+            catch (TaskCanceledException)
             {
                 if (last != null)
                     last.ToggleSelection();

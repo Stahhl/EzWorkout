@@ -16,7 +16,8 @@ namespace EzWorkout.Services
     {
         NULL,
         DURATION,
-        DISTANCE
+        DISTANCE,
+        GOTO
     }
     public enum AppPage
     {
