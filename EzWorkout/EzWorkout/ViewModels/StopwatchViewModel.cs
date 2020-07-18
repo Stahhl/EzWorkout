@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
@@ -65,16 +66,17 @@ namespace EzWorkout.ViewModels
             {
                 Duration = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
 
+                if (TrackDistance == true)
+                {
+                    _gpsManager.TrackDistance(_cts);
+                    Distance = Humanizer.DistanceFromKm(_gpsManager.TotalDistance);
+                }
+
                 if (_stopWatch.IsRunning == false)
                     return false;
                 else
                     return true;
             });
-
-            if (TrackDistance == true)
-            {
-                Task.Run(() => UpdateDistance());
-            }
         }
         public void Stop()
         {
@@ -97,16 +99,31 @@ namespace EzWorkout.ViewModels
             _gpsManager = new GpsManager();
             _cts = new CancellationTokenSource();
         }
-        private void UpdateDistance()
-        {
-            while (_cts.IsCancellationRequested == false)
-            {
-                var dist = _gpsManager.TrackDistance(new CancellationTokenSource());
-                dist.Wait();
+        //private async void UpdateDistance()
+        //{
+        //    try
+        //    {
 
-                Distance = Humanizer.DistanceFromKm(dist.Result);
-            }
-        }
+        //        //var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(0.5));
+        //        //var result = await Geolocation.GetLocationAsync(request);
+        //        var dist = _gpsManager.TrackDistance(new CancellationTokenSource());
+        //        dist.Wait();
+
+        //        Distance = Humanizer.DistanceFromKm(dist.Result);
+        //        //while (_cts.IsCancellationRequested == false)
+        //        //{
+        //        //    var dist = _gpsManager.TrackDistance(new CancellationTokenSource());
+        //        //    dist.Wait();
+
+        //        //    Distance = Humanizer.DistanceFromKm(dist.Result);
+        //        //}
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+            
+        //}
 
     }
 }

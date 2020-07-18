@@ -22,38 +22,39 @@ namespace EzWorkout.Services
         private CancellationTokenSource _cts;
 
         private double _spoofDistance;
-        private double _totalDistance;
 
-        public async Task<double> TrackDistance(CancellationTokenSource cts)
+        public double TotalDistance { get; private set; }
+
+        public async void TrackDistance(CancellationTokenSource cts)
         {
             try
             {
                 if (_cts != null)
-                    cts.Cancel();
+                    return;
+                else
+                    _cts = cts;
 
-                _cts = cts;
-                _last = _current != null ? _current : null;
-                _current = await GetLocation();
-
-                double dist = _last == null ? 0 : Location.CalculateDistance(_last, _current, DistanceUnits.Kilometers);
-                _totalDistance += dist + _spoofDistance;
-
-                await Task.Delay(1000);
-                return _totalDistance;
+                while (cts.Token.IsCancellationRequested == false)
+                {
+                    TotalDistance += await UpdateDistance(cts);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
 
-        public async Task<Location> GetLocation()
+        public async Task<double> UpdateDistance(CancellationTokenSource cts)
         {
-            var request = new GeolocationRequest(accuracy);
+            var request = new GeolocationRequest(accuracy, TimeSpan.FromSeconds(3));
             var result = await Geolocation.GetLocationAsync(request, _cts.Token);
 
-            return result;
+            _last = _current != null ? _current : null;
+            _current = result;
+
+            double dist = _last == null ? 0 : Location.CalculateDistance(_last, _current, DistanceUnits.Kilometers);
+            return  dist + _spoofDistance;
         }
     }
 }
