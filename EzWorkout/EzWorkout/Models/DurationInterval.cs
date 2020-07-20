@@ -7,6 +7,10 @@ namespace EzWorkout.Models
 {
     public class DurationInterval : _Interval
     {
+        public DurationInterval()
+        {
+
+        }
         public DurationInterval(IntervalIntensity intensity, TimeSpan duration)
         {
             Type = IntervalType.DURATION;

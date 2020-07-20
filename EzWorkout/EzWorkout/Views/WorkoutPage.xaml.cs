@@ -85,9 +85,10 @@ namespace EzWorkout.Views
 
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
-            await Navigation.PushAsync(new IntervalPage(viewModel));
+            throw new NotImplementedException();
+            //await Navigation.PushAsync(new IntervalPage(viewModel));
 
-            listView.SelectedItem = null;
+            //listView.SelectedItem = null;
         }
 
         private async Task LoopItems()

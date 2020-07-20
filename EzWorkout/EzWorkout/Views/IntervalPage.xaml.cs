@@ -21,109 +21,62 @@ namespace EzWorkout.Views
         {
             InitializeComponent();
 
-            Types = new ObservableCollection<string>();
-            var arr = Enum.GetValues(typeof(IntervalType));
-
-            //Skip the first enum "NULL"
-            for (int i = 1; i < arr.Length; i++)
-            {
-                Types.Add(arr.GetValue(i).ToString());
-            }
-            typeView.ItemsSource = Types;
-            //if (intervalViewModel == null)
-            //{
-            //    newItem = true;
-            //    //intervalViewModel = new IntervalViewModel(new _Interval());
-            //}
-
             workout = workoutViewModel;
-            //BindingContext = viewModel = intervalViewModel;
-            BindingContext = this;
 
-            //typePicker.SelectedIndexChanged += typeChanged;
-            //timePicker.TimeSelected += timeChanged;
-
-            //timePicker.IsVisible = viewModel.Type == IntervalType.DURATION ? true : false;
-            //listView.SelectionChanged += SelectionChanged;
+            switch (intervalType)
+            {
+                case IntervalType.DURATION:
+                    DurationInterval();
+                    break;
+                case IntervalType.DISTANCE:
+                    DistanceInterval();
+                    break;
+                case IntervalType.GOTO:
+                    GoToInterval();
+                    break;
+                default:
+                    throw new NotImplementedException("default");
+            }
         }
 
-        //private void SelectionChanged(object sender, ItemSelectionChangedEventArgs e)
-        //{
-        //    switch ((IntervalType)Enum.Parse(typeof(IntervalType), listView.SelectedItem.ToString()))
-        //    {
-        //        case (IntervalType.DISTANCE):
-        //            break;
-        //        case (IntervalType.DURATION):
-        //            break;
-        //        case (IntervalType.GOTO):
-        //            break;
-        //        default:
-        //            throw new NotImplementedException();
-        //    }
-        //}
+        private void DurationInterval()
+        {
+            BindingContext = viewModel = new IntervalViewModel(new DurationInterval());
+
+            DurationObj.IsVisible = true;
+            IntensityObj.IsVisible = true;
+        }
+        private void DistanceInterval()
+        {
+            BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
+
+            DistanceObj.IsVisible = true;
+            IntensityObj.IsVisible = true;
+        }
+        private void GoToInterval()
+        {
+            BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
+
+            GoToObj.IsVisible = true;
+        }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
 
-        public ObservableCollection<string> Types { get; private set; }
 
         private IntervalViewModel viewModel;
         private WorkoutViewModel workout;
-        private bool newItem;
+        private bool completed;
 
-        private void typeChanged(object sender, EventArgs e)
-        {
-            //if (typePicker.SelectedItem == IntervalType.NULL)
-            //{
-            //    timePicker.IsVisible = false;
-            //}
-            //if (typePicker.SelectedItem == IntervalType.DISTANCE)
-            //{
-            //    timePicker.IsVisible = false;
-            //}
-            //if (typePicker.SelectedItem == IntervalType.DURATION)
-            //{
-            //    timePicker.IsVisible = true;
-            //}
-        }
-        //private void timeChanged(object sender, EventArgs e)
-        //{
-        //    if (timePicker.Time > TimeSpan.Zero)
-        //        viewModel.Duration = TimeSpan.FromSeconds(timePicker.Time.TotalSeconds);
-        //}
-
-        //private async void BtnContinue(object sender, EventArgs e)
-        //{
-        //    switch ((IntervalType)Enum.Parse(typeof(IntervalType), listView.SelectedItem.ToString()))
-        //    {
-        //        default:
-        //            break;
-        //    }
-        //}
-        private async void BtnCancel(object sender, EventArgs e)
-        {
-            await Navigation.PopAsync();
-        }
-        //private async void BtnDuration(object sender, EventArgs e)
-        //{
-        //    await Navigation.PopAsync();
-        //}
-        //private async void BtnDistance(object sender, EventArgs e)
-        //{
-        //    await Navigation.PopAsync();
-        //}
-        //private async void BtnGoTo(object sender, EventArgs e)
+        //private async void BtnCancel(object sender, EventArgs e)
         //{
         //    await Navigation.PopAsync();
         //}
         //private async void BtnSave(object sender, EventArgs e)
         //{
-        //    if (hasErrors())
-        //        return;
-
-        //    if (newItem == true)
+        //    if (completed == true)
         //        workout.Intervals.Add(viewModel);
 
         //    await Navigation.PopAsync();

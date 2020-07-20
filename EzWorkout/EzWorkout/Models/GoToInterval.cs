@@ -7,6 +7,10 @@ namespace EzWorkout.Models
 {
     public class GoToInterval : _Interval
     {
+        public GoToInterval()
+        {
+        }
+
         public GoToInterval(int intervalNumber)
         {
             Type = IntervalType.GOTO;
