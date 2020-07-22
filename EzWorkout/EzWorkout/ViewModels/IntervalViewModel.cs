@@ -1,5 +1,6 @@
 ﻿using EzWorkout.Models;
 using EzWorkout.Services;
+using EzWorkout.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,15 +8,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace EzWorkout.ViewModels
 {
     public class IntervalViewModel : _BaseViewModel
     {
-        public IntervalViewModel(_Interval _interval)
+        public IntervalViewModel(_Interval interval)
         {
-            interval = _interval;
+            _interval = interval;
+
             Color = Color.LightBlue;
 
             Types = new ObservableCollection<string>();
@@ -28,11 +31,19 @@ namespace EzWorkout.ViewModels
             }
         }
 
-        public _Interval interval;
+        private _Interval _interval;
         private Color _color;
         private bool _isSelected;
 
         public ObservableCollection<string> Types { get; private set; }
+        public _Interval Interval
+        {
+            get { return _interval; }
+            private set
+            {
+                _interval = value;
+            }
+        }
         public Color Color
         {
             get { return _color; }
@@ -40,23 +51,23 @@ namespace EzWorkout.ViewModels
         }
         public IntervalIntensity Intensity
         {
-            get { return interval.Intensity; }
-            set { SetProperty(ref interval.Intensity, value); }
+            get { return _interval.Intensity; }
+            set { SetProperty(ref _interval.Intensity, value); }
         }
         public IntervalType Type
         {
-            get { return interval.Type; }
-            set { SetProperty(ref interval.Type, value); }
+            get { return _interval.Type; }
+            set { SetProperty(ref _interval.Type, value); }
         }
         public TimeSpan Duration
         {
-            get { return interval.CurrentDuration; }
-            set { SetProperty(ref interval.CurrentDuration, value); }
+            get { return _interval.CurrentDuration; }
+            set { SetProperty(ref _interval.CurrentDuration, value); }
         }
         public int Distance
         {
-            get { return interval.CurrentDistance; }
-            set { SetProperty(ref interval.CurrentDistance, value); }
+            get { return _interval.CurrentDistance; }
+            set { SetProperty(ref _interval.CurrentDistance, value); }
         }
 
         public void ToggleSelection()
@@ -97,8 +108,8 @@ namespace EzWorkout.ViewModels
         }
         public void Reset()
         {
-            Duration = interval.Duration;
-            Distance = interval.Distance;
+            Duration = _interval.Duration;
+            Distance = _interval.Distance;
         }
     }
 }

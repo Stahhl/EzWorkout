@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -39,6 +39,41 @@ namespace EzWorkout.Views
             }
         }
 
+        private void BtnIntensity(object sender, EventArgs e)
+        {
+            int id = int.Parse(((Button)sender).CommandParameter.ToString());
+
+            viewModel.Intensity = (IntervalIntensity)id;
+
+            Color inactiveColor = Color.LightGray;
+            Color activeColor = Color.LightBlue;
+
+            Btn1.BackgroundColor = inactiveColor;
+            Btn2.BackgroundColor = inactiveColor;
+            Btn3.BackgroundColor = inactiveColor;
+            Btn4.BackgroundColor = inactiveColor;
+
+            switch (id)
+            {
+                case 1:
+                    Btn1.BackgroundColor = activeColor;
+                    break;
+                case 2:
+                    Btn2.BackgroundColor = activeColor;
+                    break;
+                case 3:
+                    Btn3.BackgroundColor = activeColor;
+                    break;
+                case 4:
+                    Btn4.BackgroundColor = activeColor;
+                    break;
+                default:
+                    break;
+            }
+        }
+        private IntervalViewModel viewModel;
+        private WorkoutViewModel workout;
+
         private void DurationInterval()
         {
             BindingContext = viewModel = new IntervalViewModel(new DurationInterval());
@@ -48,16 +83,16 @@ namespace EzWorkout.Views
         }
         private void DistanceInterval()
         {
-            BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
+            //BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
 
-            DistanceObj.IsVisible = true;
-            IntensityObj.IsVisible = true;
+            //DistanceObj.IsVisible = true;
+            //IntensityObj.IsVisible = true;
         }
         private void GoToInterval()
         {
-            BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
+            //BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
 
-            GoToObj.IsVisible = true;
+            //GoToObj.IsVisible = true;
         }
 
         protected override void OnAppearing()
@@ -66,31 +101,17 @@ namespace EzWorkout.Views
         }
 
 
-        private IntervalViewModel viewModel;
-        private WorkoutViewModel workout;
-        private bool completed;
 
-        //private async void BtnCancel(object sender, EventArgs e)
+        //private bool hasErrors()
         //{
-        //    await Navigation.PopAsync();
-        //}
-        //private async void BtnSave(object sender, EventArgs e)
-        //{
-        //    if (completed == true)
-        //        workout.Intervals.Add(viewModel);
+        //    if (
+        //        viewModel.Intensity == 0 ||
+        //        viewModel.Type == 0 ||
+        //        viewModel.Duration == TimeSpan.Zero
+        //        )
+        //        return true;
 
-        //    await Navigation.PopAsync();
+        //    return false;
         //}
-        private bool hasErrors()
-        {
-            if (
-                viewModel.Intensity == 0 ||
-                viewModel.Type == 0 ||
-                viewModel.Duration == TimeSpan.Zero
-                )
-                return true;
-
-            return false;
-        }
     }
 }
