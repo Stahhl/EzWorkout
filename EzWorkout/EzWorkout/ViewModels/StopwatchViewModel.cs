@@ -99,31 +99,5 @@ namespace EzWorkout.ViewModels
             _gpsManager = new GpsManager();
             _cts = new CancellationTokenSource();
         }
-        //private async void UpdateDistance()
-        //{
-        //    try
-        //    {
-
-        //        //var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(0.5));
-        //        //var result = await Geolocation.GetLocationAsync(request);
-        //        var dist = _gpsManager.TrackDistance(new CancellationTokenSource());
-        //        dist.Wait();
-
-        //        Distance = Humanizer.DistanceFromKm(dist.Result);
-        //        //while (_cts.IsCancellationRequested == false)
-        //        //{
-        //        //    var dist = _gpsManager.TrackDistance(new CancellationTokenSource());
-        //        //    dist.Wait();
-
-        //        //    Distance = Humanizer.DistanceFromKm(dist.Result);
-        //        //}
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-            
-        //}
-
     }
 }

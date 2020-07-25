@@ -25,10 +25,10 @@ namespace EzWorkout.Views
             BindingContext = viewModel = workoutViewModel;
 
             listView.SelectionChanged += SelectionChanged;
-            var arr1 = Enum.GetNames(typeof(IntervalType));
-            arr = new string[arr1.Length - 1];
 
-            Array.Copy(arr1, 1, arr, 0, arr1.Length - 1);
+            var tempArray = Enum.GetNames(typeof(IntervalType));
+            TypeArray = new string[tempArray.Length - 1];
+            Array.Copy(tempArray, 1, TypeArray, 0, tempArray.Length - 1);
         }
         protected override void OnAppearing()
         {
@@ -37,16 +37,15 @@ namespace EzWorkout.Views
 
         private WorkoutViewModel viewModel;
         private CancellationTokenSource cts;
-        private string[] arr;
+        private string[] TypeArray;
 
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
             listView.SelectedItem = null;
 
-            string action = await DisplayActionSheet("Type: ", "Cancel", null, arr);
-            var parse = Enum.TryParse(action, out IntervalType result);
+            string action = await DisplayActionSheet("Type: ", "Cancel", null, TypeArray);
 
-            if (parse == false)
+            if (Enum.TryParse(action, out IntervalType result) == false)
                 return;
 
             switch (result)
@@ -85,10 +84,10 @@ namespace EzWorkout.Views
 
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
-            throw new NotImplementedException();
-            //await Navigation.PushAsync(new IntervalPage(viewModel));
+            var selectedInterval = (IntervalViewModel)args.AddedItems[0];
+            await Navigation.PushAsync(new IntervalPage(viewModel, selectedInterval));
 
-            //listView.SelectedItem = null;
+            listView.SelectedItem = null;
         }
 
         private async Task LoopItems()

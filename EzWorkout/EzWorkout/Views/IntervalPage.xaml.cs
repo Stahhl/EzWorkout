@@ -17,11 +17,44 @@ namespace EzWorkout.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class IntervalPage : ContentPage
     {
-        public IntervalPage(WorkoutViewModel workoutViewModel, IntervalType intervalType)
+        private void Init(WorkoutViewModel workoutViewModel)
         {
             InitializeComponent();
 
             workout = workoutViewModel;
+        }
+        /// <summary>
+        /// Edit an existing interval
+        /// </summary>
+        /// <param name="workoutViewModel"></param>
+        /// <param name="intervalViewModel"></param>
+        public IntervalPage(WorkoutViewModel workoutViewModel, IntervalViewModel intervalViewModel)
+        {
+            Init(workoutViewModel);
+
+            switch (intervalViewModel.Type)
+            {
+                case IntervalType.DURATION:
+                    DurationInterval(intervalViewModel);
+                    break;
+                case IntervalType.DISTANCE:
+                    DistanceInterval(intervalViewModel);
+                    break;
+                case IntervalType.GOTO:
+                    GoToInterval(intervalViewModel);
+                    break;
+                default:
+                    throw new NotImplementedException("default");
+            }
+        }
+        /// <summary>
+        /// Create a new interval of param type
+        /// </summary>
+        /// <param name="workoutViewModel"></param>
+        /// <param name="intervalType"></param>
+        public IntervalPage(WorkoutViewModel workoutViewModel, IntervalType intervalType)
+        {
+            Init(workoutViewModel);
 
             switch (intervalType)
             {
@@ -39,12 +72,19 @@ namespace EzWorkout.Views
             }
         }
 
+        private IntervalViewModel viewModel;
+        private WorkoutViewModel workout;
+
         private void BtnIntensity(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandParameter.ToString());
-
             viewModel.Intensity = (IntervalIntensity)id;
 
+            IntensityPicker(id);
+        }
+
+        private void IntensityPicker(int id)
+        {
             Color inactiveColor = Color.LightGray;
             Color activeColor = Color.LightBlue;
 
@@ -68,27 +108,31 @@ namespace EzWorkout.Views
                     Btn4.BackgroundColor = activeColor;
                     break;
                 default:
-                    break;
+                    throw new Exception("default");
             }
         }
-        private IntervalViewModel viewModel;
-        private WorkoutViewModel workout;
 
-        private void DurationInterval()
+        private void DurationInterval(IntervalViewModel intervalViewModel = null)
         {
-            BindingContext = viewModel = new IntervalViewModel(new DurationInterval());
+            if (intervalViewModel == null)
+                BindingContext = viewModel = new IntervalViewModel(new DurationInterval());
+            else
+            {
+                BindingContext = viewModel = intervalViewModel;
+                IntensityPicker((int)intervalViewModel.Intensity);
+            }
 
             DurationObj.IsVisible = true;
             IntensityObj.IsVisible = true;
         }
-        private void DistanceInterval()
+        private void DistanceInterval(IntervalViewModel intervalViewModel = null)
         {
             //BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
 
             //DistanceObj.IsVisible = true;
             //IntensityObj.IsVisible = true;
         }
-        private void GoToInterval()
+        private void GoToInterval(IntervalViewModel intervalViewModel = null)
         {
             //BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
 

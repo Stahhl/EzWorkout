@@ -34,7 +34,7 @@
                         ShowHeader="False"
                         x:Name="timePicker"
                         PickerMode="Default" 
-                        Time="0:00:00"/>
+                        Time="{Binding Duration}"/>
 
                 </StackLayout>
 
