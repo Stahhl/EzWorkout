@@ -36,12 +36,10 @@
         <syncfusion:SfListView.FooterTemplate>
             <DataTemplate>
 
-                <Grid>
-                    <StackLayout Orientation="Horizontal" BackgroundColor="Black">
-                        <Button x:Name="btnAdd" Clicked="AddItem_Clicked" Text="ADD" BackgroundColor="Yellow" HorizontalOptions="FillAndExpand" />
-                        <Button x:Name="btnStart" Clicked="Start_Clicked" Text="{Binding BtnStartText}" BackgroundColor="LightGreen" HorizontalOptions="FillAndExpand" />
-                    </StackLayout>
-                </Grid>
+                <StackLayout VerticalOptions="End" Orientation="Horizontal" Margin="5">
+                    <Button x:Name="btnAdd" Clicked="AddItem_Clicked" Text="ADD" HorizontalOptions="FillAndExpand"/>
+                    <Button x:Name="btnStart" Clicked="Start_Clicked" Text="{Binding BtnStartText}" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
 
             </DataTemplate>
         </syncfusion:SfListView.FooterTemplate>

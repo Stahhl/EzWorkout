@@ -7,7 +7,7 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              Title="Browse"
              x:Class="EzWorkout.Views.BrowseWorkoutsPage">
-    
+
     <syncfusion:SfListView x:Name="listView" 
                            SelectionMode="Single"
                            SelectionGesture="DoubleTap"
@@ -35,13 +35,12 @@
         </syncfusion:SfListView.ItemTemplate>
         <syncfusion:SfListView.FooterTemplate>
             <DataTemplate>
-                <Grid>
-                    <StackLayout Orientation="Horizontal" BackgroundColor="Black">
-                        <Button x:Name="BtnNewWorkout" Clicked="BtnNewWorkout" Text="New Workout"  TextColor="White" BackgroundColor="CornflowerBlue" HorizontalOptions="FillAndExpand" />
-                    </StackLayout>
-                </Grid>
+                <StackLayout Orientation="Horizontal">
+                    <Button x:Name="BtnNewWorkout" Clicked="BtnNewWorkout" Text="New Workout" HorizontalOptions="FillAndExpand" Margin="135,5,135,5"/>
+                </StackLayout>
             </DataTemplate>
         </syncfusion:SfListView.FooterTemplate>
     </syncfusion:SfListView>
-    
+
+
 </ContentPage>
