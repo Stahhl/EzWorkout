@@ -22,6 +22,14 @@ namespace EzWorkout.Views
             InitializeComponent();
 
             workout = workoutViewModel;
+
+            Btn1.Clicked += Btn_Intensity;
+            Btn2.Clicked += Btn_Intensity;
+            Btn3.Clicked += Btn_Intensity;
+            Btn4.Clicked += Btn_Intensity;
+
+            BtnCancel.Clicked += Btn_Cancel;
+            BtnSave.Clicked += Btn_Save;
         }
         /// <summary>
         /// Edit an existing interval
@@ -31,6 +39,10 @@ namespace EzWorkout.Views
         public IntervalPage(WorkoutViewModel workoutViewModel, IntervalViewModel intervalViewModel)
         {
             Init(workoutViewModel);
+
+            newItem = false;
+
+            _intensity = intervalViewModel.Intensity;
 
             switch (intervalViewModel.Type)
             {
@@ -56,6 +68,8 @@ namespace EzWorkout.Views
         {
             Init(workoutViewModel);
 
+            newItem = true;
+
             switch (intervalType)
             {
                 case IntervalType.DURATION:
@@ -74,14 +88,30 @@ namespace EzWorkout.Views
 
         private IntervalViewModel viewModel;
         private WorkoutViewModel workout;
+        private bool newItem;
 
-        private void BtnIntensity(object sender, EventArgs e)
+        private void Btn_Intensity(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandParameter.ToString());
-            viewModel.Intensity = (IntervalIntensity)id;
+            _intensity = (IntervalIntensity)id;
 
             IntensityPicker(id);
         }
+        private void Btn_Cancel(object sender, EventArgs e)
+        {
+            Navigation.PopAsync();
+        }
+        private void Btn_Save(object sender, EventArgs e)
+        {
+            if (UpdateInterval() == false)
+                return;
+            if (newItem == true)
+                workout.Intervals.Add(viewModel);
+
+            Navigation.PopAsync();
+        }
+
+        private IntervalIntensity _intensity;
 
         private void IntensityPicker(int id)
         {
@@ -144,18 +174,29 @@ namespace EzWorkout.Views
             base.OnAppearing();
         }
 
+        private bool UpdateInterval()
+        {
+            if (viewModel.Type == IntervalType.DISTANCE)
+            {
+            }
+            if (viewModel.Type == IntervalType.DURATION)
+            {
+                if (_intensity == IntervalIntensity.NULL || timePicker.Time <= TimeSpan.Zero)
+                    return false;
+                else
+                {
+                    viewModel.Intensity = _intensity;
+                    viewModel.Duration = timePicker.Time;
 
+                    return true;
+                }
+            }
+            if (viewModel.Type == IntervalType.GOTO)
+            {
 
-        //private bool hasErrors()
-        //{
-        //    if (
-        //        viewModel.Intensity == 0 ||
-        //        viewModel.Type == 0 ||
-        //        viewModel.Duration == TimeSpan.Zero
-        //        )
-        //        return true;
+            }
 
-        //    return false;
-        //}
+            return false;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace EzWorkout.Models
     {
         public DurationInterval()
         {
-
+            Type = IntervalType.DURATION;
         }
         public DurationInterval(IntervalIntensity intensity, TimeSpan duration)
         {

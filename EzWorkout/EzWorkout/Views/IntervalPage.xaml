@@ -20,10 +20,10 @@
                     <Label Text="Intensity: " FontSize="Large"/>
                     <!--<services:EnumBindablePicker x:TypeArguments="services:IntervalIntensity" SelectedItem="{Binding Intensity}"/>-->
                     <StackLayout Orientation="Horizontal">
-                        <Button  Text="1" x:Name="Btn1" CommandParameter="1" Clicked="BtnIntensity" BackgroundColor="LightGray"/>
-                        <Button  Text="2" x:Name="Btn2" CommandParameter="2" Clicked="BtnIntensity" BackgroundColor="LightGray"/>
-                        <Button  Text="3" x:Name="Btn3" CommandParameter="3" Clicked="BtnIntensity" BackgroundColor="LightGray"/>
-                        <Button  Text="4" x:Name="Btn4" CommandParameter="4" Clicked="BtnIntensity" BackgroundColor="LightGray"/>
+                        <Button  Text="1" x:Name="Btn1" CommandParameter="1" BackgroundColor="LightGray"/>
+                        <Button  Text="2" x:Name="Btn2" CommandParameter="2" BackgroundColor="LightGray"/>
+                        <Button  Text="3" x:Name="Btn3" CommandParameter="3" BackgroundColor="LightGray"/>
+                        <Button  Text="4" x:Name="Btn4" CommandParameter="4" BackgroundColor="LightGray"/>
                     </StackLayout>
 
                 </StackLayout>

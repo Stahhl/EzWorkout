@@ -9,14 +9,22 @@ namespace EzWorkout.Models
 {
     public abstract class _Interval
     {
+        public int IntervalNumber;
+
+        //Enums
         public IntervalIntensity Intensity;
         public IntervalType Type;
 
+        //Duration
         public TimeSpan Duration;
         public TimeSpan CurrentDuration;
 
+        //Distance
         public int Distance;
         public int CurrentDistance;
-        public int IntervalNumber;
+
+        //GoTo
+        public int GoTo;
+        public int Repeat;
     }
 }

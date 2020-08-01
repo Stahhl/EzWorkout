@@ -9,6 +9,7 @@ namespace EzWorkout.Models
     {
         public DistanceInterval()
         {
+            Type = IntervalType.DISTANCE;
         }
 
         public DistanceInterval(IntervalIntensity intensity, int distance)

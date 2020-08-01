@@ -9,6 +9,7 @@ namespace EzWorkout.Models
     {
         public GoToInterval()
         {
+            Type = IntervalType.GOTO;
         }
 
         public GoToInterval(int intervalNumber)

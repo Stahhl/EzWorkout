@@ -69,6 +69,16 @@ namespace EzWorkout.ViewModels
             get { return _interval.CurrentDistance; }
             set { SetProperty(ref _interval.CurrentDistance, value); }
         }
+        public int GoTo
+        {
+            get { return _interval.GoTo; }
+            set { SetProperty(ref _interval.GoTo, value); }
+        }
+        public int Repeat
+        {
+            get { return _interval.Repeat; }
+            set { SetProperty(ref _interval.Repeat, value); }
+        }
 
         public void ToggleSelection()
         {
