@@ -24,6 +24,9 @@ namespace EzWorkout.Views
 
             BindingContext = viewModel = workoutViewModel;
 
+            itemsVisibility();
+
+            listView.ChildAdded += ItemsVisibility;
             listView.SelectionChanged += SelectionChanged;
 
             var tempArray = Enum.GetNames(typeof(IntervalType));
@@ -79,6 +82,33 @@ namespace EzWorkout.Views
                 Task.Run(() => LoopItems());
 
                 viewModel.BtnStartText = "RESET";
+            }
+        }
+        private void ItemsVisibility(object sender, EventArgs e)
+        {
+            itemsVisibility();
+        }
+        private void itemsVisibility()
+        {
+            var itemSource = listView;
+            var arr = (listView.ItemsSource as IEnumerable<IntervalViewModel>).ToArray();
+
+            for (int i = 0; i < viewModel.Intervals.Count; i++)
+            {
+                var interval = viewModel.Intervals[i];
+                var obj = arr[i];
+
+                switch (interval.Type)
+                {
+                    case IntervalType.DURATION:
+                        break;
+                    case IntervalType.DISTANCE:
+                        break;
+                    case IntervalType.GOTO:
+                        break;
+                    default:
+                        throw new Exception("default");
+                }
             }
         }
 

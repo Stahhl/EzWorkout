@@ -16,10 +16,10 @@
 
             <StackLayout VerticalOptions="CenterAndExpand" Orientation="Vertical" >
 
-                <StackLayout x:Name="IntensityObj" IsVisible="false"  >
+                <StackLayout x:Name="IntensityObj" IsVisible="false" >
                     <Label Text="Intensity: " FontSize="Large"/>
                     <!--<services:EnumBindablePicker x:TypeArguments="services:IntervalIntensity" SelectedItem="{Binding Intensity}"/>-->
-                    <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <Button  Text="1" x:Name="Btn1" CommandParameter="1" BackgroundColor="LightGray"/>
                         <Button  Text="2" x:Name="Btn2" CommandParameter="2" BackgroundColor="LightGray"/>
                         <Button  Text="3" x:Name="Btn3" CommandParameter="3" BackgroundColor="LightGray"/>
@@ -40,8 +40,32 @@
 
                 <StackLayout x:Name="DistanceObj" IsVisible="false">
                     <Label Text="Distance: " FontSize="Large"/>
-
+                    <Entry x:Name="DistanceEntry" Text="{Binding Distance}" Keyboard="Numeric"/>
                 </StackLayout>
+
+                <!--<StackLayout x:Name="DistanceObj" IsVisible="false">
+                    <Label Text="{Binding DistanceHumanized}" FontSize="Large"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button x:Name="BtnDistMinus1" Text="-" CommandParameter="-1000" HorizontalOptions="Start" />
+                        <Label x:Name="LblDist1" Text="1000" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
+                        <Button x:Name="BtnDistPlus1" Text="+" CommandParameter="1000"  HorizontalOptions="End"/>
+
+                    </StackLayout>
+                    <Label Text="100 m: " FontSize="Large"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button x:Name="BtnDistMinus2" Text="-" CommandParameter="-100"  HorizontalOptions="Start" />
+                        <Label x:Name="LblDist2" Text="100" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
+                        <Button x:Name="BtnDistPlus2" Text="+" CommandParameter="100"  HorizontalOptions="End"/>
+
+                    </StackLayout>
+                    <Label Text="10 m: " FontSize="Large"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button x:Name="BtnDistMinus3" Text="-" CommandParameter="-10"  HorizontalOptions="Start" />
+                        <Label x:Name="LblDist3" Text="10" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
+                        <Button x:Name="BtnDistPlus3" Text="+" CommandParameter="10"  HorizontalOptions="End"/>
+
+                    </StackLayout>
+                </StackLayout>-->
 
                 <StackLayout x:Name="GoToObj" IsVisible="false">
                     <Label Text="GoTo: " FontSize="Large"/>

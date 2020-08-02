@@ -24,12 +24,31 @@
         </syncfusion:SfListView.DragDropController>
         <syncfusion:SfListView.ItemTemplate>
             <DataTemplate>
+                <StackLayout>
 
-                <StackLayout Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
-                    <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
-                    <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
-                    <Label Text="{Binding Duration}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+                    <StackLayout x:Name="DurationObj" IsEnabled="{Binding DurationEnabled}" IsVisible="{Binding DurationEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
+                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Duration}" FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+
+                    </StackLayout>
+
+                    <StackLayout x:Name="DistanceOnj" IsEnabled="{Binding DistanceEnabled}" IsVisible="{Binding DistanceEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
+                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding DistanceHumanized}" FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+
+                    </StackLayout>
+
+                    <StackLayout x:Name="GoToObj" IsEnabled="{Binding GoToEnabled}" IsVisible="{Binding GoToEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
+                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Repeat}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding GoTo}" FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+
+                    </StackLayout>
+
                 </StackLayout>
+
 
             </DataTemplate>
         </syncfusion:SfListView.ItemTemplate>

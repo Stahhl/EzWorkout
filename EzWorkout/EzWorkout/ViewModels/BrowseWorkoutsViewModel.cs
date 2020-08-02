@@ -19,7 +19,7 @@ namespace EzWorkout.ViewModels
             workouts = new ObservableCollection<WorkoutViewModel>();
 
             var list = new List<_Interval>();
-            list.Add(new DurationInterval(IntervalIntensity.INACTIVE, TimeSpan.FromSeconds(10)));
+            list.Add(new DistanceInterval(IntervalIntensity.INACTIVE, 15));
             list.Add(new DurationInterval(IntervalIntensity.MEDIUM, TimeSpan.FromSeconds(10)));
             list.Add(new DurationInterval(IntervalIntensity.HIGH, TimeSpan.FromSeconds(10)));
 

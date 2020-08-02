@@ -67,7 +67,15 @@ namespace EzWorkout.ViewModels
         public int Distance
         {
             get { return _interval.CurrentDistance; }
-            set { SetProperty(ref _interval.CurrentDistance, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(this.DistanceHumanized));
+                SetProperty(ref _interval.CurrentDistance, value); 
+            }
+        }
+        public string DistanceHumanized
+        {
+            get { return Humanizer.DistanceFromM(Distance); }
         }
         public int GoTo
         {
@@ -78,6 +86,27 @@ namespace EzWorkout.ViewModels
         {
             get { return _interval.Repeat; }
             set { SetProperty(ref _interval.Repeat, value); }
+        }
+        public bool GoToEnabled
+        {
+            get
+            {
+                return Type == IntervalType.GOTO ? true : false;
+            }
+        }
+        public bool DurationEnabled
+        {
+            get
+            {
+                return Type == IntervalType.DURATION ? true : false;
+            }
+        }
+        public bool DistanceEnabled
+        {
+            get
+            {
+                return Type == IntervalType.DISTANCE ? true : false;
+            }
         }
 
         public void ToggleSelection()

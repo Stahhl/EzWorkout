@@ -152,15 +152,21 @@ namespace EzWorkout.Views
                 IntensityPicker((int)intervalViewModel.Intensity);
             }
 
-            DurationObj.IsVisible = true;
             IntensityObj.IsVisible = true;
+            DurationObj.IsVisible = true;
         }
         private void DistanceInterval(IntervalViewModel intervalViewModel = null)
         {
-            //BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
+            if(intervalViewModel == null)
+                BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
+            else
+            {
+                BindingContext = viewModel = intervalViewModel;
+                IntensityPicker((int)intervalViewModel.Intensity);
+            }
 
-            //DistanceObj.IsVisible = true;
-            //IntensityObj.IsVisible = true;
+            IntensityObj.IsVisible = true;
+            DistanceObj.IsVisible = true;
         }
         private void GoToInterval(IntervalViewModel intervalViewModel = null)
         {
@@ -178,6 +184,17 @@ namespace EzWorkout.Views
         {
             if (viewModel.Type == IntervalType.DISTANCE)
             {
+                int dist = int.Parse(DistanceEntry.Text);
+
+                if (_intensity == IntervalIntensity.NULL || dist <= 0)
+                    return false;
+                else
+                {
+                    viewModel.Intensity = _intensity;
+                    viewModel.Distance = dist;
+
+                    return true;
+                }
             }
             if (viewModel.Type == IntervalType.DURATION)
             {
