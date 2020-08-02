@@ -69,12 +69,13 @@ namespace EzWorkout.ViewModels
             get { return _interval.CurrentDistance; }
             set 
             {
-                OnPropertyChanged(nameof(this.DistanceHumanized));
+                OnPropertyChanged(nameof(DistanceHumanized));
                 SetProperty(ref _interval.CurrentDistance, value); 
             }
         }
         public string DistanceHumanized
         {
+            //OnPropertyChanged from setter on this.Distance
             get { return Humanizer.DistanceFromM(Distance); }
         }
         public int GoTo

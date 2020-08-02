@@ -12,10 +12,11 @@ namespace EzWorkout.Models
             Type = IntervalType.GOTO;
         }
 
-        public GoToInterval(int intervalNumber)
+        public GoToInterval(int goTo, int repeat)
         {
             Type = IntervalType.GOTO;
-            IntervalNumber = intervalNumber;
+            GoTo = goTo;
+            Repeat = repeat;
         }
     }
 }

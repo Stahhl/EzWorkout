@@ -28,6 +28,11 @@ namespace EzWorkout.Views
             Btn3.Clicked += Btn_Intensity;
             Btn4.Clicked += Btn_Intensity;
 
+            BtnGoToMinus.Clicked += Btn_GoToMinus;
+            BtnGoToPlus.Clicked += Btn_GoToPlus;
+            BtnRepeatMinus.Clicked += Btn_RepeatMinus;
+            BtnRepeatPlus.Clicked += Btn_RepeatPlus;
+
             BtnCancel.Clicked += Btn_Cancel;
             BtnSave.Clicked += Btn_Save;
         }
@@ -111,6 +116,32 @@ namespace EzWorkout.Views
             Navigation.PopAsync();
         }
 
+        private void Btn_GoToMinus(object sender, EventArgs e)
+        {
+            if (viewModel.GoTo - 1 < 0)
+                return;
+
+            viewModel.GoTo--;
+        }
+        private void Btn_GoToPlus(object sender, EventArgs e)
+        {
+            if (viewModel.GoTo + 1 > workout.Intervals.Count)
+                return;
+
+            viewModel.GoTo++;
+        }
+        private void Btn_RepeatMinus(object sender, EventArgs e)
+        {
+            if (viewModel.Repeat - 1 < 0)
+                return;
+
+            viewModel.Repeat--;
+        }
+        private void Btn_RepeatPlus(object sender, EventArgs e)
+        {
+            viewModel.Repeat++;
+        }
+
         private IntervalIntensity _intensity;
 
         private void IntensityPicker(int id)
@@ -170,9 +201,14 @@ namespace EzWorkout.Views
         }
         private void GoToInterval(IntervalViewModel intervalViewModel = null)
         {
-            //BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
+            if (intervalViewModel == null)
+                BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
+            else
+            {
+                BindingContext = viewModel = intervalViewModel;
+            }
 
-            //GoToObj.IsVisible = true;
+            GoToObj.IsVisible = true;
         }
 
         protected override void OnAppearing()
@@ -210,7 +246,13 @@ namespace EzWorkout.Views
             }
             if (viewModel.Type == IntervalType.GOTO)
             {
+                if ((viewModel.GoTo < 0 || viewModel.GoTo > workout.Intervals.Count) || viewModel.Repeat < 0)
+                    return false;
+                else
+                {
 
+                    return true;
+                }
             }
 
             return false;
