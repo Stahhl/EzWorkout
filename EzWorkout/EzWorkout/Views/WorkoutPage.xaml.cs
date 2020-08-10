@@ -28,11 +28,48 @@ namespace EzWorkout.Views
 
             listView.ChildAdded += ItemsVisibility;
             listView.SelectionChanged += SelectionChanged;
+            listView.ItemDragging += ItemsDrasgging;
 
             var tempArray = Enum.GetNames(typeof(IntervalType));
             TypeArray = new string[tempArray.Length - 1];
             Array.Copy(tempArray, 1, TypeArray, 0, tempArray.Length - 1);
         }
+
+        private void ItemsDrasgging(object sender, ItemDraggingEventArgs e)
+        {
+            if(e.Action == DragAction.Drop && e.NewIndex != e.OldIndex)
+            {
+                ReorderDisplay(e.OldIndex, e.NewIndex);
+            }
+        }
+        private void ReorderDisplay(int oldIndex, int newIndex)
+        {
+            viewModel.Intervals[oldIndex].IntervalIndex = newIndex;
+
+            //0 -> n
+            if(oldIndex < newIndex)
+            {
+                int begin = oldIndex + 1;
+                int end = newIndex + 1;
+
+                for (int i = begin; i < end; i++)
+                {
+                    viewModel.Intervals[i].IntervalIndex--;
+                }
+            }
+            //n -> 0
+            else
+            {
+                int begin = newIndex;
+                int end = oldIndex;
+
+                for (int i = begin; i < end; i++)
+                {
+                    viewModel.Intervals[i].IntervalIndex++;
+                }
+            }
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

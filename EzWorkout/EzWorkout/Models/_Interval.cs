@@ -9,8 +9,6 @@ namespace EzWorkout.Models
 {
     public abstract class _Interval
     {
-        public int IntervalNumber;
-
         //Enums
         public IntervalIntensity Intensity;
         public IntervalType Type;

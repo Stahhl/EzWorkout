@@ -15,9 +15,10 @@ namespace EzWorkout.ViewModels
 {
     public class IntervalViewModel : _BaseViewModel
     {
-        public IntervalViewModel(_Interval interval)
+        public IntervalViewModel(_Interval interval, int intervalIndex)
         {
             _interval = interval;
+            IntervalIndex = intervalIndex;
 
             Color = Color.LightBlue;
 
@@ -34,7 +35,13 @@ namespace EzWorkout.ViewModels
         private _Interval _interval;
         private Color _color;
         private bool _isSelected;
+        private int _intervalIndex;
 
+        public int IntervalIndex
+        {
+            get { return _intervalIndex; }
+            set { SetProperty(ref _intervalIndex, value); }
+        }
         public ObservableCollection<string> Types { get; private set; }
         public _Interval Interval
         {
@@ -109,6 +116,8 @@ namespace EzWorkout.ViewModels
                 return Type == IntervalType.DISTANCE ? true : false;
             }
         }
+
+
 
         public void ToggleSelection()
         {

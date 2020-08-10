@@ -16,9 +16,9 @@ namespace EzWorkout.ViewModels
 
             Workout = workout;
 
-            foreach (var interval in workout.Intervals)
+            for (int i = 0; i < workout.Intervals.Count; i++)
             {
-                Intervals.Add(new IntervalViewModel(interval));
+                Intervals.Add(new IntervalViewModel(workout.Intervals[i], i));
             }
 
             _intervals.CollectionChanged += OnIntervalsChanged;

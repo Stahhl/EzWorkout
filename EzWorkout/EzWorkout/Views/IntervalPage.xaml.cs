@@ -176,7 +176,7 @@ namespace EzWorkout.Views
         private void DurationInterval(IntervalViewModel intervalViewModel = null)
         {
             if (intervalViewModel == null)
-                BindingContext = viewModel = new IntervalViewModel(new DurationInterval());
+                BindingContext = viewModel = new IntervalViewModel(new DurationInterval(), workout.Intervals.Count + 1);
             else
             {
                 BindingContext = viewModel = intervalViewModel;
@@ -189,7 +189,7 @@ namespace EzWorkout.Views
         private void DistanceInterval(IntervalViewModel intervalViewModel = null)
         {
             if(intervalViewModel == null)
-                BindingContext = viewModel = new IntervalViewModel(new DistanceInterval());
+                BindingContext = viewModel = new IntervalViewModel(new DistanceInterval(), workout.Intervals.Count + 1);
             else
             {
                 BindingContext = viewModel = intervalViewModel;
@@ -202,7 +202,7 @@ namespace EzWorkout.Views
         private void GoToInterval(IntervalViewModel intervalViewModel = null)
         {
             if (intervalViewModel == null)
-                BindingContext = viewModel = new IntervalViewModel(new GoToInterval());
+                BindingContext = viewModel = new IntervalViewModel(new GoToInterval(), workout.Intervals.Count + 1);
             else
             {
                 BindingContext = viewModel = intervalViewModel;
