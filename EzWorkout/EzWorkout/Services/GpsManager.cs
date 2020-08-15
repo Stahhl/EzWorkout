@@ -23,7 +23,7 @@ namespace EzWorkout.Services
 
         private double _spoofDistance;
 
-        public double TotalDistance { get; private set; }
+        public double TotalDistance { get; set; }
 
         public async void TrackDistance(CancellationTokenSource cts)
         {

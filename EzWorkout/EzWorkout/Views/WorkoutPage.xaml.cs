@@ -41,7 +41,7 @@ namespace EzWorkout.Views
 
         private void ItemsDrasgging(object sender, ItemDraggingEventArgs e)
         {
-            if(e.Action == DragAction.Drop && e.NewIndex != e.OldIndex)
+            if (e.Action == DragAction.Drop && e.NewIndex != e.OldIndex)
             {
                 ReorderDisplay(e.OldIndex, e.NewIndex);
             }
@@ -52,7 +52,7 @@ namespace EzWorkout.Views
             _viewModel.Intervals[oldIndex].IntervalIndex = newIndex;
 
             //0 -> n
-            if(oldIndex < newIndex)
+            if (oldIndex < newIndex)
             {
                 int begin = oldIndex + 1;
                 int end = newIndex + 1;
@@ -158,7 +158,7 @@ namespace EzWorkout.Views
             listView.SelectedItem = null;
         }
 
-        private async Task LoopItems()
+        private void LoopItems()
         {
             IntervalViewModel current = null;
             IntervalViewModel last = null;
@@ -175,14 +175,31 @@ namespace EzWorkout.Views
                     if (last != null)
                         last.ToggleSelection();
 
-                    last = current;
+                    switch (current.Type)
+                    {
+                        case IntervalType.DURATION:
+                            current.CountdownTime(_cts);
+                            break;
+                        case IntervalType.DISTANCE:
+                            current.CountdownDistance(_cts);
+                            break;
+                        case IntervalType.GOTO:
+                            if (current.Repeat > 0)
+                            {
+                                Reset(i);
 
-                    await current.Countdown(_cts);
+                                current.Repeat--;
+                                i = current.GoTo - 1;
+                            }
+                            break;
+                        default:
+                            throw new NotImplementedException("default");
+                    }
+
+                    last = current;
                 }
 
                 last.ToggleSelection();
-
-                Reset();
             }
             catch (TaskCanceledException)
             {
@@ -197,11 +214,13 @@ namespace EzWorkout.Views
             }
         }
 
-        private void Reset()
+        private void Reset(int loopTo = -1)
         {
-            foreach (var interval in _viewModel.Intervals)
+            loopTo = loopTo == -1 ? _viewModel.Intervals.Count : loopTo;
+
+            for (int i = 0; i < loopTo; i++)
             {
-                interval.Reset();
+                _viewModel.Intervals[i].Reset();
             }
         }
     }

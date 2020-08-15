@@ -74,10 +74,10 @@ namespace EzWorkout.ViewModels
         public int Distance
         {
             get { return _interval.CurrentDistance; }
-            set 
+            set
             {
                 OnPropertyChanged(nameof(DistanceHumanized));
-                SetProperty(ref _interval.CurrentDistance, value); 
+                SetProperty(ref _interval.CurrentDistance, value);
             }
         }
         public string DistanceHumanized
@@ -88,12 +88,34 @@ namespace EzWorkout.ViewModels
         public int GoTo
         {
             get { return _interval.GoTo; }
-            set { SetProperty(ref _interval.GoTo, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(GoToString));
+                SetProperty(ref _interval.GoTo, value); 
+            }
+        }
+        public string GoToString
+        {
+            get
+            {
+                return $"Go to: {GoTo}";
+            }
         }
         public int Repeat
         {
             get { return _interval.Repeat; }
-            set { SetProperty(ref _interval.Repeat, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(RepeatString));
+                SetProperty(ref _interval.Repeat, value); 
+            }
+        }
+        public string RepeatString
+        {
+            get
+            {
+                return $"Repeat: {Repeat}";
+            }
         }
         public bool GoToEnabled
         {
@@ -132,7 +154,7 @@ namespace EzWorkout.ViewModels
                 Color = Color.LightBlue;
             }
         }
-        public async Task Countdown(CancellationTokenSource cts)
+        public void CountdownTime(CancellationTokenSource cts)
         {
             int tick = 10;
 
@@ -152,8 +174,33 @@ namespace EzWorkout.ViewModels
                     current = 0;
                 }
 
-                await Task.Delay(tick);
+                //await Task.Delay(tick);
+                Thread.Sleep(tick);
             }
+        }
+        public void CountdownDistance(CancellationTokenSource cts)
+        {
+            var gpsManager = new GpsManager();
+
+            while (Distance > 0)
+            {
+                gpsManager.TrackDistance(cts);
+
+                if (gpsManager.TotalDistance > 0.001)
+                {
+                    gpsManager.TotalDistance -= 0.001;
+                    Distance -= 1;
+                }
+            }
+        }
+        public void CountdownGoTo()
+        {
+            if (Repeat == 0)
+                return;
+
+            Repeat--;
+
+
         }
         public void Reset()
         {

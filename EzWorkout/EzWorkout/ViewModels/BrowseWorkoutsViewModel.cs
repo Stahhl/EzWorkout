@@ -20,9 +20,9 @@ namespace EzWorkout.ViewModels
 
             var list = new List<_Interval>();
             list.Add(new DistanceInterval(IntervalIntensity.INACTIVE, 15));
-            list.Add(new DurationInterval(IntervalIntensity.MEDIUM, TimeSpan.FromSeconds(10)));
-            list.Add(new DurationInterval(IntervalIntensity.HIGH, TimeSpan.FromSeconds(10)));
-            list.Add(new GoToInterval(1, 1));
+            list.Add(new DurationInterval(IntervalIntensity.MEDIUM, TimeSpan.FromSeconds(3)));
+            list.Add(new GoToInterval(0, 1));
+            list.Add(new DurationInterval(IntervalIntensity.HIGH, TimeSpan.FromSeconds(3)));
 
 
             workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "Workout " + NumberOfWorkouts }));
