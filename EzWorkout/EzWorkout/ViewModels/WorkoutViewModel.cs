@@ -1,10 +1,12 @@
 ﻿using EzWorkout.Models;
+using Syncfusion.ListView.XForms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
 using Xamarin.Forms;
+using SelectionMode = Syncfusion.ListView.XForms.SelectionMode;
 
 namespace EzWorkout.ViewModels
 {
@@ -33,7 +35,25 @@ namespace EzWorkout.ViewModels
         private Workout _workout;
         private ObservableCollection<IntervalViewModel> _intervals;
         private string _btnStartText = "START";
+        private bool _isLooping = true;
 
+        public bool IsLooping 
+        { 
+            get { return _isLooping; } 
+            set 
+            { 
+                if(value == true)
+                {
+
+                }
+                else
+                {
+
+                }
+
+                SetProperty(ref _isLooping, value); 
+            } 
+        }
         public string BtnStartText
         {
             get { return _btnStartText; }
@@ -54,6 +74,26 @@ namespace EzWorkout.ViewModels
         public string Description
         {
             get { return $"{_intervals.Count} intervals"; }
+        }
+        public DragStartMode DragStartMode
+        {
+            get
+            {
+                if (IsLooping)
+                    return DragStartMode.None;
+
+                return DragStartMode.OnHold;
+            }
+        }
+        public SelectionMode SelectionMode
+        {
+            get
+            {
+                if (IsLooping)
+                    return SelectionMode.None;
+
+                return SelectionMode.Single;
+            }
         }
     }
 }

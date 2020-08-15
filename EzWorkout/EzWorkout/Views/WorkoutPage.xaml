@@ -10,12 +10,12 @@
 
 
     <syncfusion:SfListView x:Name="listView" 
-                           SelectionMode="Single"
+                           SelectionMode="{Binding SelectionMode}"
                            SelectionGesture="DoubleTap"
                            SelectionBackgroundColor="#E4E4E4"
                            ItemsSource="{Binding Intervals}"
                            ItemSize="100"
-                           DragStartMode="OnHold"
+                           DragStartMode="{Binding DragStartMode}"
                            IsStickyFooter="True"
                            FooterSize="60"
                            >

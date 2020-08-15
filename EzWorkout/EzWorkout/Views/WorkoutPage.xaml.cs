@@ -22,7 +22,7 @@ namespace EzWorkout.Views
         {
             InitializeComponent();
 
-            BindingContext = viewModel = workoutViewModel;
+            BindingContext = _viewModel = workoutViewModel;
 
             itemsVisibility();
 
@@ -31,9 +31,13 @@ namespace EzWorkout.Views
             listView.ItemDragging += ItemsDrasgging;
 
             var tempArray = Enum.GetNames(typeof(IntervalType));
-            TypeArray = new string[tempArray.Length - 1];
-            Array.Copy(tempArray, 1, TypeArray, 0, tempArray.Length - 1);
+            _typeArray = new string[tempArray.Length - 1];
+            Array.Copy(tempArray, 1, _typeArray, 0, tempArray.Length - 1);
         }
+
+        private WorkoutViewModel _viewModel;
+        private CancellationTokenSource _cts;
+        private string[] _typeArray;
 
         private void ItemsDrasgging(object sender, ItemDraggingEventArgs e)
         {
@@ -42,9 +46,10 @@ namespace EzWorkout.Views
                 ReorderDisplay(e.OldIndex, e.NewIndex);
             }
         }
+
         private void ReorderDisplay(int oldIndex, int newIndex)
         {
-            viewModel.Intervals[oldIndex].IntervalIndex = newIndex;
+            _viewModel.Intervals[oldIndex].IntervalIndex = newIndex;
 
             //0 -> n
             if(oldIndex < newIndex)
@@ -54,7 +59,7 @@ namespace EzWorkout.Views
 
                 for (int i = begin; i < end; i++)
                 {
-                    viewModel.Intervals[i].IntervalIndex--;
+                    _viewModel.Intervals[i].IntervalIndex--;
                 }
             }
             //n -> 0
@@ -65,7 +70,7 @@ namespace EzWorkout.Views
 
                 for (int i = begin; i < end; i++)
                 {
-                    viewModel.Intervals[i].IntervalIndex++;
+                    _viewModel.Intervals[i].IntervalIndex++;
                 }
             }
         }
@@ -75,15 +80,11 @@ namespace EzWorkout.Views
             base.OnAppearing();
         }
 
-        private WorkoutViewModel viewModel;
-        private CancellationTokenSource cts;
-        private string[] TypeArray;
-
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
             listView.SelectedItem = null;
 
-            string action = await DisplayActionSheet("Type: ", "Cancel", null, TypeArray);
+            string action = await DisplayActionSheet("Type: ", "Cancel", null, _typeArray);
 
             if (Enum.TryParse(action, out IntervalType result) == false)
                 return;
@@ -91,13 +92,13 @@ namespace EzWorkout.Views
             switch (result)
             {
                 case IntervalType.DISTANCE:
-                    await Navigation.PushAsync(new IntervalPage(viewModel, result));
+                    await Navigation.PushAsync(new IntervalPage(_viewModel, result));
                     break;
                 case IntervalType.DURATION:
-                    await Navigation.PushAsync(new IntervalPage(viewModel, result));
+                    await Navigation.PushAsync(new IntervalPage(_viewModel, result));
                     break;
                 case IntervalType.GOTO:
-                    await Navigation.PushAsync(new IntervalPage(viewModel, result));
+                    await Navigation.PushAsync(new IntervalPage(_viewModel, result));
                     break;
                 default:
                     throw new Exception("DEFAULT");
@@ -105,20 +106,20 @@ namespace EzWorkout.Views
         }
         private void Start_Clicked(object sender, EventArgs e)
         {
-            if (cts != null)
+            if (_cts != null)
             {
-                cts.Cancel();
-                cts = null;
+                _cts.Cancel();
+                _cts = null;
 
-                viewModel.BtnStartText = "START";
+                _viewModel.BtnStartText = "START";
             }
             else
             {
-                cts = new CancellationTokenSource();
+                _cts = new CancellationTokenSource();
 
                 Task.Run(() => LoopItems());
 
-                viewModel.BtnStartText = "RESET";
+                _viewModel.BtnStartText = "RESET";
             }
         }
         private void ItemsVisibility(object sender, EventArgs e)
@@ -130,9 +131,9 @@ namespace EzWorkout.Views
             var itemSource = listView;
             var arr = (listView.ItemsSource as IEnumerable<IntervalViewModel>).ToArray();
 
-            for (int i = 0; i < viewModel.Intervals.Count; i++)
+            for (int i = 0; i < _viewModel.Intervals.Count; i++)
             {
-                var interval = viewModel.Intervals[i];
+                var interval = _viewModel.Intervals[i];
                 var obj = arr[i];
 
                 switch (interval.Type)
@@ -152,7 +153,7 @@ namespace EzWorkout.Views
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
             var selectedInterval = (IntervalViewModel)args.AddedItems[0];
-            await Navigation.PushAsync(new IntervalPage(viewModel, selectedInterval));
+            await Navigation.PushAsync(new IntervalPage(_viewModel, selectedInterval));
 
             listView.SelectedItem = null;
         }
@@ -164,10 +165,10 @@ namespace EzWorkout.Views
 
             try
             {
-                for (int i = 0; i < viewModel.Intervals.Count; i++)
+                for (int i = 0; i < _viewModel.Intervals.Count; i++)
                 {
 
-                    current = viewModel.Intervals[i];
+                    current = _viewModel.Intervals[i];
 
                     current.ToggleSelection();
 
@@ -176,7 +177,7 @@ namespace EzWorkout.Views
 
                     last = current;
 
-                    await current.Countdown(cts);
+                    await current.Countdown(_cts);
                 }
 
                 last.ToggleSelection();
@@ -198,7 +199,7 @@ namespace EzWorkout.Views
 
         private void Reset()
         {
-            foreach (var interval in viewModel.Intervals)
+            foreach (var interval in _viewModel.Intervals)
             {
                 interval.Reset();
             }
