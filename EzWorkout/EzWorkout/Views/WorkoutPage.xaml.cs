@@ -110,6 +110,7 @@ namespace EzWorkout.Views
             {
                 _cts.Cancel();
                 _cts = null;
+                Reset();
 
                 _viewModel.BtnStartText = "START";
             }
@@ -205,8 +206,6 @@ namespace EzWorkout.Views
             {
                 if (last != null)
                     last.ToggleSelection();
-
-                Reset();
             }
             catch (Exception ex)
             {
