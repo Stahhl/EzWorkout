@@ -1,6 +1,5 @@
-﻿using System;
+﻿using SQLite;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EzWorkout.Models
 {
@@ -15,7 +14,11 @@ namespace EzWorkout.Models
             Intervals = intervals;
         }
 
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string Name { get; set; }
+
+        [Ignore]
         public List<_Interval> Intervals { get; set; }
 
     }

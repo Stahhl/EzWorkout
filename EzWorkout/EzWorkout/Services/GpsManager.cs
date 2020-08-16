@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Globalization;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using PermissionStatus = Plugin.Permissions.Abstractions.PermissionStatus;
 
 namespace EzWorkout.Services
 {
@@ -12,7 +16,16 @@ namespace EzWorkout.Services
     {
         public GpsManager()
         {
-            _spoofDistance = double.Parse(AppSettingsManager.Settings["SpoofDistance"]);
+            AskPermission();
+            _spoofDistance = double.Parse(AppSettingsManager.Settings["SpoofDistance"], CultureInfo.InvariantCulture);
+        }
+
+        private void AskPermission()
+        {
+            //MainThread.BeginInvokeOnMainThread(async () =>
+            //{
+            //    var status = await cross
+            //});
         }
 
         private const GeolocationAccuracy accuracy = GeolocationAccuracy.High;
@@ -47,14 +60,21 @@ namespace EzWorkout.Services
 
         public async Task<double> UpdateDistance(CancellationTokenSource cts)
         {
+            if(await CrossPermissions.Current.CheckPermissionStatusAsync<LocationPermission>() != PermissionStatus.Granted)
+            {
+                await CrossPermissions.Current.RequestPermissionAsync<LocationPermission>();
+            }
+
             var request = new GeolocationRequest(accuracy, TimeSpan.FromSeconds(3));
             var result = await Geolocation.GetLocationAsync(request, _cts.Token);
 
             _last = _current != null ? _current : null;
             _current = result;
 
-            double dist = _last == null ? 0 : Location.CalculateDistance(_last, _current, DistanceUnits.Kilometers);
-            return  dist + _spoofDistance;
+            var dist = _last == null ? 0 : Location.CalculateDistance(_last, _current, DistanceUnits.Kilometers);
+            var tot = dist + _spoofDistance;
+
+            return  tot;
         }
     }
 }

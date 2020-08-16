@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EzWorkout.ViewModels
 {
@@ -11,36 +12,35 @@ namespace EzWorkout.ViewModels
     {
         public BrowseWorkoutsViewModel()
         {
-            generateDummyData();
+
         }
 
-        private void generateDummyData()
+        public void Init(List<Workout> workouts)
         {
-            workouts = new ObservableCollection<WorkoutViewModel>();
-
-            var list = new List<_Interval>();
-            list.Add(new DistanceInterval(IntervalIntensity.INACTIVE, 15));
-            list.Add(new DurationInterval(IntervalIntensity.MEDIUM, TimeSpan.FromSeconds(3)));
-            list.Add(new GoToInterval(0, 1));
-            list.Add(new DurationInterval(IntervalIntensity.HIGH, TimeSpan.FromSeconds(3)));
-
-
-            workouts.Add(new WorkoutViewModel( new Workout(list){ Name = "Workout " + NumberOfWorkouts }));
-            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "Workout " + NumberOfWorkouts }));
-            workouts.Add(new WorkoutViewModel(new Workout(list) { Name = "Workout " + NumberOfWorkouts }));
+            _workouts = new ObservableCollection<WorkoutViewModel>();
+            foreach (var item in workouts)
+            {
+                _workouts.Add(new WorkoutViewModel(item));
+            }
+            OnPropertyChanged(nameof(Workouts));
         }
 
-        private ObservableCollection<WorkoutViewModel> workouts;
+        private ObservableCollection<WorkoutViewModel> _workouts;
 
         public ObservableCollection<WorkoutViewModel> Workouts
         {
-            get { return workouts; }
-            set { this.workouts = value; }
+            get { return _workouts; }
+            set 
+            {
+                OnPropertyChanged(nameof(Workouts));
+
+                _workouts = value; 
+            }
         }
 
         public int NumberOfWorkouts
         {
-            get { return workouts.Count + 1; }
+            get { return Workouts.Count + 1; }
         }
     }
 }

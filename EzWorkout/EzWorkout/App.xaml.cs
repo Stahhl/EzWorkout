@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using EzWorkout.Services;
 using EzWorkout.Views;
+using EzWorkout.Database;
 
 namespace EzWorkout
 {
@@ -18,6 +19,20 @@ namespace EzWorkout
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(AppSettingsManager.Settings["SyncFusionLicense"]);
 
             MainPage = new MainPage();
+        }
+
+        static WorkoutDb database;
+        public static WorkoutDb Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new WorkoutDb();
+                }
+
+                return database;
+            }
         }
 
         protected override void OnStart()

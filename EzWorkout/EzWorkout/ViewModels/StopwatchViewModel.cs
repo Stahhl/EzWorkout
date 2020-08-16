@@ -30,17 +30,29 @@ namespace EzWorkout.ViewModels
         public string Duration
         {
             get { return _duration; }
-            set { SetProperty(ref _duration, value); }
+            set
+            {
+                OnPropertyChanged(nameof(Duration));
+                _duration = value;
+            }
         }
         public string Distance
         {
             get { return _distance; }
-            set { SetProperty(ref _distance, value); }
+            set
+            {
+                OnPropertyChanged(nameof(Distance));
+                _distance = value;
+            }
         }
         public string ButtonText_StartStop
         {
             get { return _buttonText_StartStop; }
-            set { SetProperty(ref _buttonText_StartStop, value); }
+            set
+            {
+                OnPropertyChanged(nameof(ButtonText_StartStop));
+                _buttonText_StartStop = value;
+            }
         }
 
         public void StartStop()

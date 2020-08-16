@@ -35,14 +35,14 @@ namespace EzWorkout.ViewModels
         private Workout _workout;
         private ObservableCollection<IntervalViewModel> _intervals;
         private string _btnStartText = "START";
-        private bool _isLooping = true;
+        private bool _isLooping;
 
-        public bool IsLooping 
-        { 
-            get { return _isLooping; } 
-            set 
-            { 
-                if(value == true)
+        public bool IsLooping
+        {
+            get { return _isLooping; }
+            set
+            {
+                if (value == true)
                 {
 
                 }
@@ -51,19 +51,26 @@ namespace EzWorkout.ViewModels
 
                 }
 
-                SetProperty(ref _isLooping, value); 
-            } 
+                OnPropertyChanged(nameof(IsLooping));
+
+                _isLooping = value;
+            }
         }
         public string BtnStartText
         {
             get { return _btnStartText; }
-            set { SetProperty(ref _btnStartText, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(BtnStartText));
+
+                _btnStartText = value;
+            }
         }
         public Workout Workout
         {
             get { return _workout; }
-            set 
-            { 
+            set
+            {
                 this._workout = value;
             }
         }

@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using EzWorkout.Services;
+using SQLite;
 using Xamarin.Forms;
 
 namespace EzWorkout.Models
 {
-    public abstract class _Interval
+    public class _Interval
     {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        [Indexed]
+        public int WorkoutId { get; set; }
+
         //Enums
-        public IntervalIntensity Intensity;
-        public IntervalType Type;
+        public IntervalIntensity Intensity { get; set; }
+        public IntervalType Type { get; set; }
 
         //Duration
-        public TimeSpan Duration;
-        public TimeSpan CurrentDuration;
+        public TimeSpan Duration { get; set; }
+        public TimeSpan CurrentDuration { get; set; }
 
         //Distance
-        public int Distance;
-        public int CurrentDistance;
+        public int Distance { get; set; }
+        public int CurrentDistance { get; set; }
 
         //GoTo
-        public int GoTo;
-        public int Repeat;
+        public int GoTo { get; set; }
+        public int Repeat { get; set; }
     }
 }

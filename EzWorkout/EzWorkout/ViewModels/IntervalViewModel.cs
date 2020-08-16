@@ -37,12 +37,8 @@ namespace EzWorkout.ViewModels
         private bool _isSelected;
         private int _intervalIndex;
 
-        public int IntervalIndex
-        {
-            get { return _intervalIndex; }
-            set { SetProperty(ref _intervalIndex, value); }
-        }
         public ObservableCollection<string> Types { get; private set; }
+
         public _Interval Interval
         {
             get { return _interval; }
@@ -51,25 +47,55 @@ namespace EzWorkout.ViewModels
                 _interval = value;
             }
         }
+        public int IntervalIndex
+        {
+            get { return _intervalIndex; }
+            set 
+            {
+                OnPropertyChanged(nameof(IntervalIndex));
+
+                _intervalIndex = value;
+            }
+        }
         public Color Color
         {
             get { return _color; }
-            set { SetProperty(ref _color, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(Color));
+
+                _color = value;
+            }
         }
         public IntervalIntensity Intensity
         {
             get { return _interval.Intensity; }
-            set { SetProperty(ref _interval.Intensity, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(Intensity));
+
+                Interval.Intensity = value;
+            }
         }
         public IntervalType Type
         {
             get { return _interval.Type; }
-            set { SetProperty(ref _interval.Type, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(Type));
+
+                _interval.Type = value;
+            }
         }
         public TimeSpan Duration
         {
             get { return _interval.CurrentDuration; }
-            set { SetProperty(ref _interval.CurrentDuration, value); }
+            set 
+            {
+                OnPropertyChanged(nameof(Duration));
+
+                _interval.CurrentDuration = value;
+            }
         }
         public int Distance
         {
@@ -77,7 +103,9 @@ namespace EzWorkout.ViewModels
             set
             {
                 OnPropertyChanged(nameof(DistanceHumanized));
-                SetProperty(ref _interval.CurrentDistance, value);
+                OnPropertyChanged(nameof(Distance));
+
+                _interval.CurrentDistance = value;
             }
         }
         public string DistanceHumanized
@@ -88,10 +116,12 @@ namespace EzWorkout.ViewModels
         public int GoTo
         {
             get { return _interval.GoTo; }
-            set 
+            set
             {
                 OnPropertyChanged(nameof(GoToString));
-                SetProperty(ref _interval.GoTo, value); 
+                OnPropertyChanged(nameof(_interval.GoTo));
+
+                _interval.GoTo = value;
             }
         }
         public string GoToString
@@ -104,10 +134,12 @@ namespace EzWorkout.ViewModels
         public int Repeat
         {
             get { return _interval.Repeat; }
-            set 
+            set
             {
                 OnPropertyChanged(nameof(RepeatString));
-                SetProperty(ref _interval.Repeat, value); 
+                OnPropertyChanged(nameof(_interval.Repeat));
+
+                _interval.Repeat = value;
             }
         }
         public string RepeatString
@@ -170,7 +202,7 @@ namespace EzWorkout.ViewModels
 
                 if (current >= max)
                 {
-                    Duration = Duration.Subtract(TimeSpan.FromMilliseconds(max));
+                    Duration -= TimeSpan.FromMilliseconds(max);
                     current = 0;
                 }
 

@@ -25,6 +25,16 @@ namespace EzWorkout.Views
 
         private BrowseWorkoutsViewModel viewModel;
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            //await App.Database.InitializeAsync();
+            var list = await App.Database.GetItemsAsync();
+            viewModel.Init(list);
+            //listView.ItemsSource = await App.Database.GetItemsAsync();
+        }
+
         private async void BtnNewWorkout(object sender, EventArgs e)
         {
             string result = await DisplayPromptAsync("Input:", "Workout name?", initialValue: "Workout " + viewModel.NumberOfWorkouts);
