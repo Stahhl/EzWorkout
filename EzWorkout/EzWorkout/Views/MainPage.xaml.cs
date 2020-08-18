@@ -43,6 +43,9 @@ namespace EzWorkout.Views
                 case (int)AppPage.Stopwatch:
                     newPage = new StopwatchPage();
                     break;
+                case (int)AppPage.Settings:
+                    newPage = new SettingsPage();
+                    break;
                 case (int)AppPage.About:
                     newPage = new AboutPage();
                     break;

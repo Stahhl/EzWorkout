@@ -93,6 +93,7 @@ namespace EzWorkout.Database
                 await Database.InsertAsync(item);
             }
 
+            //save intervals after workout, intervals have a workoutId FK
             foreach (var interval in item.Intervals)
             {
                 interval.WorkoutId = item.Id;

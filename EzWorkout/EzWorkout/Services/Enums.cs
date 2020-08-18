@@ -24,6 +24,7 @@ namespace EzWorkout.Services
         Home,
         Workouts,
         Stopwatch,
+        Settings,
         About
     }
 
