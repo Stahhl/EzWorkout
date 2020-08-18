@@ -29,10 +29,8 @@ namespace EzWorkout.Views
         {
             base.OnAppearing();
 
-            //await App.Database.InitializeAsync();
             var list = await App.Database.GetItemsAsync();
             viewModel.Init(list);
-            //listView.ItemsSource = await App.Database.GetItemsAsync();
         }
 
         private async void BtnNewWorkout(object sender, EventArgs e)
