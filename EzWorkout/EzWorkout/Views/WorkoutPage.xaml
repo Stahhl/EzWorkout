@@ -25,7 +25,9 @@
         <syncfusion:SfListView.ItemTemplate>
             <DataTemplate>
                 <StackLayout>
-
+                    
+                    <!--Toggle visibility rather than having multiple views-->
+                    
                     <StackLayout x:Name="DurationObj" IsEnabled="{Binding DurationEnabled}" IsVisible="{Binding DurationEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
                         <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
                         <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
@@ -59,8 +61,9 @@
             <DataTemplate>
 
                 <StackLayout VerticalOptions="End" Orientation="Horizontal" Margin="5">
-                    <Button x:Name="btnAdd" Clicked="AddItem_Clicked" Text="ADD" HorizontalOptions="FillAndExpand"/>
-                    <Button x:Name="btnStart" Clicked="Start_Clicked" Text="{Binding BtnStartText}" HorizontalOptions="FillAndExpand"/>
+                    <!--DOM issues cant do "x:name.clicked = x;" here, just bind the Clicked directly.-->
+                    <Button Clicked="BtnAddItem" Text="ADD" HorizontalOptions="FillAndExpand"/>
+                    <Button Clicked="BtnStart" Text="{Binding BtnStartText}" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
             </DataTemplate>

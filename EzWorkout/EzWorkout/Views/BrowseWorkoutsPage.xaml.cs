@@ -35,9 +35,13 @@ namespace EzWorkout.Views
 
         private async void BtnNewWorkout(object sender, EventArgs e)
         {
-            string result = await DisplayPromptAsync("Input:", "Workout name?", initialValue: "Workout " + viewModel.NumberOfWorkouts);
+            string workoutName = await DisplayPromptAsync("Input:", "Workout name?", initialValue: "Workout " + viewModel.NumberOfWorkouts);
 
-            await Navigation.PushAsync(new WorkoutPage(new WorkoutViewModel(new Workout() { Name = result })));
+            var workout = new Workout() { Name = workoutName };
+
+            _ = App.Database.SaveItemAsync(workout);
+
+            await Navigation.PushAsync(new WorkoutPage(new WorkoutViewModel(workout)));
         }
 
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)

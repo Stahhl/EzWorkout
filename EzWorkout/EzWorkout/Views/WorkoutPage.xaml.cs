@@ -46,7 +46,11 @@ namespace EzWorkout.Views
                 ReorderDisplay(e.OldIndex, e.NewIndex);
             }
         }
-
+        /// <summary>
+        /// Reorders the line numbers of intervals in the listview on dragging them around.
+        /// </summary>
+        /// <param name="oldIndex"></param>
+        /// <param name="newIndex"></param>
         private void ReorderDisplay(int oldIndex, int newIndex)
         {
             _viewModel.Intervals[oldIndex].IntervalIndex = newIndex;
@@ -74,37 +78,22 @@ namespace EzWorkout.Views
                 }
             }
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
-
-        private async void AddItem_Clicked(object sender, EventArgs e)
+        private async void BtnAddItem(object sender, EventArgs e)
         {
             listView.SelectedItem = null;
 
             string action = await DisplayActionSheet("Type: ", "Cancel", null, _typeArray);
 
-            if (Enum.TryParse(action, out IntervalType result) == false)
+            if (Enum.TryParse(action, out IntervalType intervalType) == false)
                 return;
 
-            switch (result)
-            {
-                case IntervalType.DISTANCE:
-                    await Navigation.PushAsync(new IntervalPage(_viewModel, result));
-                    break;
-                case IntervalType.DURATION:
-                    await Navigation.PushAsync(new IntervalPage(_viewModel, result));
-                    break;
-                case IntervalType.GOTO:
-                    await Navigation.PushAsync(new IntervalPage(_viewModel, result));
-                    break;
-                default:
-                    throw new Exception("DEFAULT");
-            }
+            await Navigation.PushAsync(new IntervalPage(_viewModel, intervalType));
         }
-        private void Start_Clicked(object sender, EventArgs e)
+        private void BtnStart(object sender, EventArgs e)
         {
             if (_cts != null)
             {
@@ -129,13 +118,9 @@ namespace EzWorkout.Views
         }
         private void itemsVisibility()
         {
-            var itemSource = listView;
-            var arr = (listView.ItemsSource as IEnumerable<IntervalViewModel>).ToArray();
-
             for (int i = 0; i < _viewModel.Intervals.Count; i++)
             {
                 var interval = _viewModel.Intervals[i];
-                var obj = arr[i];
 
                 switch (interval.Type)
                 {
@@ -150,7 +135,6 @@ namespace EzWorkout.Views
                 }
             }
         }
-
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
         {
             var selectedInterval = (IntervalViewModel)args.AddedItems[0];
@@ -158,7 +142,6 @@ namespace EzWorkout.Views
 
             listView.SelectedItem = null;
         }
-
         private void LoopItems()
         {
             IntervalViewModel current = null;
@@ -212,7 +195,6 @@ namespace EzWorkout.Views
                 throw ex;
             }
         }
-
         private void Reset(int loopTo = -1)
         {
             loopTo = loopTo == -1 ? _viewModel.Intervals.Count : loopTo;

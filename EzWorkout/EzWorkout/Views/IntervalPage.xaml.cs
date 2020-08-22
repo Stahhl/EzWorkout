@@ -23,18 +23,18 @@ namespace EzWorkout.Views
 
             workout = workoutViewModel;
 
-            Btn1.Clicked += Btn_Intensity;
-            Btn2.Clicked += Btn_Intensity;
-            Btn3.Clicked += Btn_Intensity;
-            Btn4.Clicked += Btn_Intensity;
+            btn1.Clicked += BtnIntensity;
+            btn2.Clicked += BtnIntensity;
+            btn3.Clicked += BtnIntensity;
+            btn4.Clicked += BtnIntensity;
 
-            BtnGoToMinus.Clicked += Btn_GoToMinus;
-            BtnGoToPlus.Clicked += Btn_GoToPlus;
-            BtnRepeatMinus.Clicked += Btn_RepeatMinus;
-            BtnRepeatPlus.Clicked += Btn_RepeatPlus;
+            btnGoToMinus.Clicked += BtnGoToMinus;
+            btnGoToPlus.Clicked += BtnGoToPlus;
+            btnRepeatMinus.Clicked += BtnRepeatMinus;
+            btnRepeatPlus.Clicked += BtnRepeatPlus;
 
-            BtnCancel.Clicked += Btn_Cancel;
-            BtnSave.Clicked += Btn_Save;
+            btnCancel.Clicked += BtnCancel;
+            btnSave.Clicked += BtnSave;
         }
         /// <summary>
         /// Edit an existing interval
@@ -91,88 +91,92 @@ namespace EzWorkout.Views
             }
         }
 
+        private IntervalIntensity _intensity;
         private IntervalViewModel viewModel;
         private WorkoutViewModel workout;
-        private bool newItem;
+        private bool newItem; //constructor
 
-        private void Btn_Intensity(object sender, EventArgs e)
+        #region controls
+        private void BtnIntensity(object sender, EventArgs e)
         {
             int id = int.Parse(((Button)sender).CommandParameter.ToString());
             _intensity = (IntervalIntensity)id;
 
             IntensityPicker(id);
         }
-        private void Btn_Cancel(object sender, EventArgs e)
+        private void BtnCancel(object sender, EventArgs e)
         {
             Navigation.PopAsync();
         }
-        private void Btn_Save(object sender, EventArgs e)
+        private async void BtnSave(object sender, EventArgs e)
         {
             if (UpdateInterval() == false)
                 return;
+
             if (newItem == true)
+            {
                 workout.Intervals.Add(viewModel);
 
-            Navigation.PopAsync();
-        }
+                await App.Database.SaveItemAsync(viewModel.Interval, workout.Workout);
+            }
 
-        private void Btn_GoToMinus(object sender, EventArgs e)
+            await Navigation.PopAsync();
+        }
+        private void BtnGoToMinus(object sender, EventArgs e)
         {
             if (viewModel.GoTo - 1 < 0)
                 return;
 
             viewModel.GoTo--;
         }
-        private void Btn_GoToPlus(object sender, EventArgs e)
+        private void BtnGoToPlus(object sender, EventArgs e)
         {
             if (viewModel.GoTo + 1 > workout.Intervals.Count)
                 return;
 
             viewModel.GoTo++;
         }
-        private void Btn_RepeatMinus(object sender, EventArgs e)
+        private void BtnRepeatMinus(object sender, EventArgs e)
         {
             if (viewModel.Repeat - 1 < 0)
                 return;
 
             viewModel.Repeat--;
         }
-        private void Btn_RepeatPlus(object sender, EventArgs e)
+        private void BtnRepeatPlus(object sender, EventArgs e)
         {
             viewModel.Repeat++;
         }
-
-        private IntervalIntensity _intensity;
+        #endregion
 
         private void IntensityPicker(int id)
         {
             Color inactiveColor = Color.LightGray;
             Color activeColor = Color.LightBlue;
 
-            Btn1.BackgroundColor = inactiveColor;
-            Btn2.BackgroundColor = inactiveColor;
-            Btn3.BackgroundColor = inactiveColor;
-            Btn4.BackgroundColor = inactiveColor;
+            btn1.BackgroundColor = inactiveColor;
+            btn2.BackgroundColor = inactiveColor;
+            btn3.BackgroundColor = inactiveColor;
+            btn4.BackgroundColor = inactiveColor;
 
             switch (id)
             {
                 case 1:
-                    Btn1.BackgroundColor = activeColor;
+                    btn1.BackgroundColor = activeColor;
                     break;
                 case 2:
-                    Btn2.BackgroundColor = activeColor;
+                    btn2.BackgroundColor = activeColor;
                     break;
                 case 3:
-                    Btn3.BackgroundColor = activeColor;
+                    btn3.BackgroundColor = activeColor;
                     break;
                 case 4:
-                    Btn4.BackgroundColor = activeColor;
+                    btn4.BackgroundColor = activeColor;
                     break;
                 default:
                     throw new Exception("default");
             }
         }
-
         private void DurationInterval(IntervalViewModel intervalViewModel = null)
         {
             if (intervalViewModel == null)
@@ -188,7 +192,7 @@ namespace EzWorkout.Views
         }
         private void DistanceInterval(IntervalViewModel intervalViewModel = null)
         {
-            if(intervalViewModel == null)
+            if (intervalViewModel == null)
                 BindingContext = viewModel = new IntervalViewModel(new DistanceInterval(), workout.Intervals.Count + 1);
             else
             {
@@ -210,12 +214,10 @@ namespace EzWorkout.Views
 
             GoToObj.IsVisible = true;
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
-
         private bool UpdateInterval()
         {
             if (viewModel.Type == IntervalType.DISTANCE)

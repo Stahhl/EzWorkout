@@ -82,36 +82,41 @@ namespace EzWorkout.Database
         {
             return Database.Table<Workout>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
-        public async Task<int> SaveItemAsync(Workout item)
+        public async Task<int> SaveItemAsync(Workout workout)
         {
-            if (item.Id != 0)
+            if (workout.Id != 0)
             {
-                await Database.UpdateAsync(item);
+                await Database.UpdateAsync(workout);
             }
             else
             {
-                await Database.InsertAsync(item);
+                await Database.InsertAsync(workout);
             }
 
             //save intervals after workout, intervals have a workoutId FK
-            foreach (var interval in item.Intervals)
+            foreach (var interval in workout.Intervals)
             {
-                interval.WorkoutId = item.Id;
+                interval.WorkoutId = workout.Id;
 
-                await SaveItemAsync(interval);
+                await SaveItemAsync(interval, workout);
             }
 
-            return item.Id;
+            return workout.Id;
         }
-        private Task<int> SaveItemAsync(_Interval item)
+        public Task<int> SaveItemAsync(_Interval interval, Workout workout)
         {
-            if (item.Id != 0)
+            if (workout.Id <= 0)
+                throw new Exception("WorkoutId not set!");
+
+            interval.WorkoutId = workout.Id;
+
+            if (interval.Id != 0)
             {
-                return Database.UpdateAsync(item, typeof(_Interval));
+                return Database.UpdateAsync(interval, typeof(_Interval));
             }
             else
             {
-                return Database.InsertAsync(item, typeof(_Interval));
+                return Database.InsertAsync(interval, typeof(_Interval));
             }
         }
         public Task<int> DeleteItemAsync(Workout item)

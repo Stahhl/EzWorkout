@@ -20,10 +20,10 @@
                     <Label Text="Intensity: " FontSize="Large"/>
                     <!--<services:EnumBindablePicker x:TypeArguments="services:IntervalIntensity" SelectedItem="{Binding Intensity}"/>-->
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Button  Text="1" x:Name="Btn1" CommandParameter="1" BackgroundColor="LightGray"/>
-                        <Button  Text="2" x:Name="Btn2" CommandParameter="2" BackgroundColor="LightGray"/>
-                        <Button  Text="3" x:Name="Btn3" CommandParameter="3" BackgroundColor="LightGray"/>
-                        <Button  Text="4" x:Name="Btn4" CommandParameter="4" BackgroundColor="LightGray"/>
+                        <Button  Text="1" x:Name="btn1" CommandParameter="1" BackgroundColor="LightGray"/>
+                        <Button  Text="2" x:Name="btn2" CommandParameter="2" BackgroundColor="LightGray"/>
+                        <Button  Text="3" x:Name="btn3" CommandParameter="3" BackgroundColor="LightGray"/>
+                        <Button  Text="4" x:Name="btn4" CommandParameter="4" BackgroundColor="LightGray"/>
                     </StackLayout>
 
                 </StackLayout>
@@ -46,16 +46,16 @@
                 <StackLayout x:Name="GoToObj" IsVisible="false">
                     <Label Text="GoTo: " FontSize="Large"/>
                     <StackLayout Orientation="Horizontal">
-                        <Button x:Name="BtnGoToMinus" Text="-"/>
+                        <Button x:Name="btnGoToMinus" Text="-"/>
                         <Label x:Name="LblGoTo" Text="{Binding GoTo}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
-                        <Button x:Name="BtnGoToPlus" Text="-"/>
+                        <Button x:Name="btnGoToPlus" Text="-"/>
 
                     </StackLayout>
                     <Label Text="Repeat: " FontSize="Large"/>
                     <StackLayout Orientation="Horizontal">
-                        <Button x:Name="BtnRepeatMinus" Text="-"/>
+                        <Button x:Name="btnRepeatMinus" Text="-"/>
                         <Label x:Name="LblRepeat" Text="{Binding Repeat}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
-                        <Button x:Name="BtnRepeatPlus" Text="-"/>
+                        <Button x:Name="btnRepeatPlus" Text="-"/>
                         
                     </StackLayout>
 
@@ -64,8 +64,8 @@
             </StackLayout>
 
             <StackLayout x:Name="ButtonsObj" VerticalOptions="End" Orientation="Horizontal">
-                <Button x:Name="BtnCancel" Text="Cancel" HorizontalOptions="FillAndExpand"/>
-                <Button x:Name="BtnSave" Text="Save" HorizontalOptions="FillAndExpand"/>
+                <Button x:Name="btnCancel" Text="Cancel" HorizontalOptions="FillAndExpand"/>
+                <Button x:Name="btnSave" Text="Save" HorizontalOptions="FillAndExpand"/>
 
             </StackLayout>
 
