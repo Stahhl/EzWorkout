@@ -34,28 +34,28 @@
                         ShowHeader="False"
                         x:Name="timePicker"
                         PickerMode="Default" 
-                        Time="{Binding Duration}"/>
+                        Time="{Binding DurationMax}"/>
 
                 </StackLayout>
 
                 <StackLayout x:Name="DistanceObj" IsVisible="false">
                     <Label Text="Distance: " FontSize="Large"/>
-                    <Entry x:Name="DistanceEntry" Text="{Binding Distance}" Keyboard="Numeric"/>
+                    <Entry x:Name="DistanceEntry" Text="{Binding DistanceMax}" Keyboard="Numeric"/>
                 </StackLayout>
 
                 <StackLayout x:Name="GoToObj" IsVisible="false">
                     <Label Text="GoTo: " FontSize="Large"/>
                     <StackLayout Orientation="Horizontal">
-                        <Button x:Name="btnGoToMinus" Text="-"/>
-                        <Label x:Name="LblGoTo" Text="{Binding GoTo}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
-                        <Button x:Name="btnGoToPlus" Text="-"/>
+                        <Button x:Name="btnGoToMinus" Text="-" CommandParameter="-1" />
+                        <Label x:Name="lblGoTo" Text="{Binding GoTo}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
+                        <Button x:Name="btnGoToPlus" Text="+" CommandParameter="1" />
 
                     </StackLayout>
                     <Label Text="Repeat: " FontSize="Large"/>
                     <StackLayout Orientation="Horizontal">
-                        <Button x:Name="btnRepeatMinus" Text="-"/>
-                        <Label x:Name="LblRepeat" Text="{Binding Repeat}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
-                        <Button x:Name="btnRepeatPlus" Text="-"/>
+                        <Button x:Name="btnRepeatMinus" Text="-" CommandParameter="-1" />
+                        <Label x:Name="lblRepeat" Text="{Binding RepeatMax}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
+                        <Button x:Name="btnRepeatPlus" Text="+" CommandParameter="1" />
                         
                     </StackLayout>
 

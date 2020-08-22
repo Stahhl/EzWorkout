@@ -17,7 +17,6 @@ namespace EzWorkout.Models
             Intensity = intensity;
 
             Duration = duration;
-            CurrentDuration = duration;
         }
     }
 }

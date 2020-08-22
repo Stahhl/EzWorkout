@@ -21,11 +21,9 @@ namespace EzWorkout.Models
 
         //Duration
         public TimeSpan Duration { get; set; }
-        public TimeSpan CurrentDuration { get; set; }
 
         //Distance
         public int Distance { get; set; }
-        public int CurrentDistance { get; set; }
 
         //GoTo
         public int GoTo { get; set; }

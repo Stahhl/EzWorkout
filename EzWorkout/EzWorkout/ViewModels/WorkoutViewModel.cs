@@ -42,18 +42,9 @@ namespace EzWorkout.ViewModels
             get { return _isLooping; }
             set
             {
-                if (value == true)
-                {
-
-                }
-                else
-                {
-
-                }
+                _isLooping = value;
 
                 OnPropertyChanged(nameof(IsLooping));
-
-                _isLooping = value;
             }
         }
         public string BtnStartText
@@ -61,9 +52,9 @@ namespace EzWorkout.ViewModels
             get { return _btnStartText; }
             set 
             {
-                OnPropertyChanged(nameof(BtnStartText));
-
                 _btnStartText = value;
+
+                OnPropertyChanged(nameof(BtnStartText));
             }
         }
         public Workout Workout

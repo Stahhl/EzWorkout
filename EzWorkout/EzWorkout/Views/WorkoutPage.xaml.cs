@@ -173,7 +173,7 @@ namespace EzWorkout.Views
                                 Reset(i);
 
                                 current.Repeat--;
-                                i = current.GoTo - 1;
+                                i = current.GoTo;
                             }
                             break;
                         default:
@@ -187,8 +187,8 @@ namespace EzWorkout.Views
             }
             catch (TaskCanceledException)
             {
-                if (last != null)
-                    last.ToggleSelection();
+                //if (last != null)
+                //    last.ToggleSelection();
             }
             catch (Exception ex)
             {

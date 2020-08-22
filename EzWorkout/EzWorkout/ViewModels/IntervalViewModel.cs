@@ -20,6 +20,8 @@ namespace EzWorkout.ViewModels
             _interval = interval;
             IntervalIndex = intervalIndex;
 
+            Reset();
+
             Color = Color.LightBlue;
 
             Types = new ObservableCollection<string>();
@@ -36,6 +38,9 @@ namespace EzWorkout.ViewModels
         private Color _color;
         private bool _isSelected;
         private int _intervalIndex;
+        private TimeSpan _duration;
+        private int _distance;
+        private int _repeat;
 
         public ObservableCollection<string> Types { get; private set; }
 
@@ -52,9 +57,9 @@ namespace EzWorkout.ViewModels
             get { return _intervalIndex; }
             set 
             {
-                OnPropertyChanged(nameof(IntervalIndex));
-
                 _intervalIndex = value;
+
+                OnPropertyChanged(nameof(IntervalIndex));
             }
         }
         public Color Color
@@ -62,9 +67,9 @@ namespace EzWorkout.ViewModels
             get { return _color; }
             set 
             {
-                OnPropertyChanged(nameof(Color));
-
                 _color = value;
+
+                OnPropertyChanged(nameof(Color));
             }
         }
         public IntervalIntensity Intensity
@@ -72,9 +77,9 @@ namespace EzWorkout.ViewModels
             get { return _interval.Intensity; }
             set 
             {
-                OnPropertyChanged(nameof(Intensity));
-
                 Interval.Intensity = value;
+
+                OnPropertyChanged(nameof(Intensity));
             }
         }
         public IntervalType Type
@@ -82,64 +87,104 @@ namespace EzWorkout.ViewModels
             get { return _interval.Type; }
             set 
             {
-                OnPropertyChanged(nameof(Type));
-
                 _interval.Type = value;
-            }
-        }
-        public TimeSpan Duration
-        {
-            get { return _interval.CurrentDuration; }
-            set 
-            {
-                OnPropertyChanged(nameof(Duration));
 
-                _interval.CurrentDuration = value;
+                OnPropertyChanged(nameof(Type));
             }
-        }
-        public int Distance
-        {
-            get { return _interval.CurrentDistance; }
-            set
-            {
-                OnPropertyChanged(nameof(DistanceHumanized));
-                OnPropertyChanged(nameof(Distance));
-
-                _interval.CurrentDistance = value;
-            }
-        }
-        public string DistanceHumanized
-        {
-            //OnPropertyChanged from setter on this.Distance
-            get { return Humanizer.DistanceFromM(Distance); }
         }
         public int GoTo
         {
             get { return _interval.GoTo; }
             set
             {
-                OnPropertyChanged(nameof(GoToString));
-                OnPropertyChanged(nameof(_interval.GoTo));
+                if (value < 0 || value >= IntervalIndex)
+                    return;
 
                 _interval.GoTo = value;
+
+                OnPropertyChanged(nameof(GoToString));
+                OnPropertyChanged(nameof(_interval.GoTo));
             }
         }
+
+        public TimeSpan Duration
+        {
+            get { return _duration; }
+            set 
+            {
+                _duration = value;
+
+                OnPropertyChanged(nameof(Duration));
+            }
+        }
+        public TimeSpan DurationMax
+        {
+            get { return _interval.Duration; }
+            set
+            {
+                _interval.Duration = value;
+                Duration = value;
+
+                OnPropertyChanged(nameof(DurationMax));
+            }
+        }
+
+        public int Distance
+        {
+            get { return _distance; }
+            set
+            {
+                _distance = value;
+
+                OnPropertyChanged(nameof(DistanceString));
+                OnPropertyChanged(nameof(Distance));
+            }
+        }
+        public int DistanceMax
+        {
+            get { return _interval.Distance; }
+            set
+            {
+                _interval.Distance = value;
+                Distance = value;
+
+                OnPropertyChanged(nameof(DistanceMax));
+            }
+        }
+
+        public int Repeat
+        {
+            get { return _repeat; }
+            set
+            {
+                if (value < 0)
+                    return;
+
+                _repeat = value;
+
+                OnPropertyChanged(nameof(RepeatString));
+            }
+        }
+        public int RepeatMax
+        {
+            get { return _interval.Repeat; }
+            set
+            {
+                if (value < 0)
+                    return;
+
+                _interval.Repeat = value;
+                Repeat = _interval.Repeat;
+
+                OnPropertyChanged(nameof(RepeatMax));
+            }
+        }
+
         public string GoToString
         {
             get
             {
                 return $"Go to: {GoTo}";
-            }
-        }
-        public int Repeat
-        {
-            get { return _interval.Repeat; }
-            set
-            {
-                OnPropertyChanged(nameof(RepeatString));
-                OnPropertyChanged(nameof(_interval.Repeat));
-
-                _interval.Repeat = value;
             }
         }
         public string RepeatString
@@ -149,6 +194,12 @@ namespace EzWorkout.ViewModels
                 return $"Repeat: {Repeat}";
             }
         }
+        public string DistanceString
+        {
+            //OnPropertyChanged from setter on this.Distance
+            get { return Humanizer.DistanceFromM(Distance); }
+        }
+
         public bool GoToEnabled
         {
             get
@@ -171,7 +222,13 @@ namespace EzWorkout.ViewModels
             }
         }
 
-
+        public void Reset()
+        {
+            Duration = DurationMax;
+            Distance = DistanceMax;
+            Repeat = RepeatMax;
+            Color = Color.LightBlue;
+        }
 
         public void ToggleSelection()
         {
@@ -231,13 +288,7 @@ namespace EzWorkout.ViewModels
                 return;
 
             Repeat--;
-
-
         }
-        public void Reset()
-        {
-            Duration = _interval.Duration;
-            Distance = _interval.Distance;
-        }
+
     }
 }

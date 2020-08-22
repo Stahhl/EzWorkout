@@ -18,7 +18,6 @@ namespace EzWorkout.Models
             Intensity = intensity;
 
             Distance = distance;
-            CurrentDistance = distance;
         }
     }
 }

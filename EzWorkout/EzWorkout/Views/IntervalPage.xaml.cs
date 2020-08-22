@@ -28,10 +28,10 @@ namespace EzWorkout.Views
             btn3.Clicked += BtnIntensity;
             btn4.Clicked += BtnIntensity;
 
-            btnGoToMinus.Clicked += BtnGoToMinus;
-            btnGoToPlus.Clicked += BtnGoToPlus;
-            btnRepeatMinus.Clicked += BtnRepeatMinus;
-            btnRepeatPlus.Clicked += BtnRepeatPlus;
+            btnGoToMinus.Clicked += BtnGoTo;
+            btnGoToPlus.Clicked += BtnGoTo;
+            btnRepeatMinus.Clicked += BtnRepeat;
+            btnRepeatPlus.Clicked += BtnRepeat;
 
             btnCancel.Clicked += BtnCancel;
             btnSave.Clicked += BtnSave;
@@ -116,36 +116,22 @@ namespace EzWorkout.Views
             if (newItem == true)
             {
                 workout.Intervals.Add(viewModel);
-
-                await App.Database.SaveItemAsync(viewModel.Interval, workout.Workout);
             }
 
+            await App.Database.SaveItemAsync(viewModel.Interval, workout.Workout);
             await Navigation.PopAsync();
         }
-        private void BtnGoToMinus(object sender, EventArgs e)
+        private void BtnGoTo(object sender, EventArgs e)
         {
-            if (viewModel.GoTo - 1 < 0)
-                return;
+            int change = int.Parse(((Button)sender).CommandParameter.ToString());
 
-            viewModel.GoTo--;
+            viewModel.GoTo += change;
         }
-        private void BtnGoToPlus(object sender, EventArgs e)
+        private void BtnRepeat(object sender, EventArgs e)
         {
-            if (viewModel.GoTo + 1 > workout.Intervals.Count)
-                return;
+            int change = int.Parse(((Button)sender).CommandParameter.ToString());
 
-            viewModel.GoTo++;
-        }
-        private void BtnRepeatMinus(object sender, EventArgs e)
-        {
-            if (viewModel.Repeat - 1 < 0)
-                return;
-
-            viewModel.Repeat--;
-        }
-        private void BtnRepeatPlus(object sender, EventArgs e)
-        {
-            viewModel.Repeat++;
+            viewModel.Repeat += change;
         }
         #endregion
 
@@ -180,7 +166,7 @@ namespace EzWorkout.Views
         private void DurationInterval(IntervalViewModel intervalViewModel = null)
         {
             if (intervalViewModel == null)
-                BindingContext = viewModel = new IntervalViewModel(new DurationInterval(), workout.Intervals.Count + 1);
+                BindingContext = viewModel = new IntervalViewModel(new DurationInterval(), workout.Intervals.Count);
             else
             {
                 BindingContext = viewModel = intervalViewModel;
@@ -193,7 +179,7 @@ namespace EzWorkout.Views
         private void DistanceInterval(IntervalViewModel intervalViewModel = null)
         {
             if (intervalViewModel == null)
-                BindingContext = viewModel = new IntervalViewModel(new DistanceInterval(), workout.Intervals.Count + 1);
+                BindingContext = viewModel = new IntervalViewModel(new DistanceInterval(), workout.Intervals.Count);
             else
             {
                 BindingContext = viewModel = intervalViewModel;
@@ -206,7 +192,7 @@ namespace EzWorkout.Views
         private void GoToInterval(IntervalViewModel intervalViewModel = null)
         {
             if (intervalViewModel == null)
-                BindingContext = viewModel = new IntervalViewModel(new GoToInterval(), workout.Intervals.Count + 1);
+                BindingContext = viewModel = new IntervalViewModel(new GoToInterval(), workout.Intervals.Count);
             else
             {
                 BindingContext = viewModel = intervalViewModel;
@@ -229,7 +215,7 @@ namespace EzWorkout.Views
                 else
                 {
                     viewModel.Intensity = _intensity;
-                    viewModel.Distance = dist;
+                    viewModel.DistanceMax = dist;
 
                     return true;
                 }
@@ -241,7 +227,7 @@ namespace EzWorkout.Views
                 else
                 {
                     viewModel.Intensity = _intensity;
-                    viewModel.Duration = timePicker.Time;
+                    viewModel.DurationMax = timePicker.Time;
 
                     return true;
                 }
@@ -252,7 +238,6 @@ namespace EzWorkout.Views
                     return false;
                 else
                 {
-
                     return true;
                 }
             }
