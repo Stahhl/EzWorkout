@@ -118,7 +118,7 @@ namespace EzWorkout.Views
                 workout.Intervals.Add(viewModel);
             }
 
-            await App.Database.SaveItemAsync(viewModel.Interval, workout.Workout);
+            await App.Database.SaveInterval(viewModel.Interval, workout.Workout);
             await Navigation.PopAsync();
         }
         private void BtnGoTo(object sender, EventArgs e)

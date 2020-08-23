@@ -22,7 +22,6 @@ namespace EzWorkout.Database
         public WorkoutDb()
         {
             InitializeAsync().SafeFireAndForget(false);
-            //InitializeAsync();
         }
         public async Task InitializeAsync()
         {
@@ -36,8 +35,6 @@ namespace EzWorkout.Database
                 {
                     await Database.CreateTablesAsync(CreateFlags.None, typeof(Workout)).ConfigureAwait(false);
                 }
-
-                //await SeedData();
 
                 initialized = true;
             }
@@ -60,12 +57,10 @@ namespace EzWorkout.Database
 
             //var x = await SaveItemAsync(new Workout(list) { Name = "Workout 1" });
         }
-
         public async Task<int> GetNumberOfItems()
         {
             return await Database.Table<Workout>().CountAsync();
         }
-        //Data manipulation methods
         public async Task<List<Workout>> GetItemsAsync()
         {
             var workouts = await Database.Table<Workout>().ToListAsync();
@@ -82,7 +77,7 @@ namespace EzWorkout.Database
         {
             return Database.Table<Workout>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
-        public async Task<int> SaveItemAsync(Workout workout)
+        public async Task<int> SaveWorkout(Workout workout)
         {
             if (workout.Id != 0)
             {
@@ -98,12 +93,12 @@ namespace EzWorkout.Database
             {
                 interval.WorkoutId = workout.Id;
 
-                await SaveItemAsync(interval, workout);
+                await SaveInterval(interval, workout);
             }
 
             return workout.Id;
         }
-        public Task<int> SaveItemAsync(_Interval interval, Workout workout)
+        public Task<int> SaveInterval(_Interval interval, Workout workout)
         {
             if (workout.Id <= 0)
                 throw new Exception("WorkoutId not set!");

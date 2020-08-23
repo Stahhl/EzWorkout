@@ -39,7 +39,7 @@ namespace EzWorkout.Views
 
             var workout = new Workout() { Name = workoutName };
 
-            _ = App.Database.SaveItemAsync(workout);
+            _ = App.Database.SaveWorkout(workout);
 
             await Navigation.PushAsync(new WorkoutPage(new WorkoutViewModel(workout)));
         }

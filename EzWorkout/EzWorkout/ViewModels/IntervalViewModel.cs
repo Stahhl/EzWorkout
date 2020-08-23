@@ -41,6 +41,11 @@ namespace EzWorkout.ViewModels
         private TimeSpan _duration;
         private int _distance;
         private int _repeat;
+        private bool _deactive;
+
+        private readonly Color inactiveColor = Color.LightBlue;
+        private readonly Color activeColor = Color.LightGreen;
+        private readonly Color deactiveColor = Color.LightCoral;
 
         public ObservableCollection<string> Types { get; private set; }
 
@@ -64,7 +69,13 @@ namespace EzWorkout.ViewModels
         }
         public Color Color
         {
-            get { return _color; }
+            get 
+            {
+                //if (_deactive)
+                //    return deactiveColor;
+
+                return _color; 
+            }
             set 
             {
                 _color = value;
@@ -160,6 +171,9 @@ namespace EzWorkout.ViewModels
                 if (value < 0)
                     return;
 
+                if (value == 0)
+                    _deactive = true;
+
                 _repeat = value;
 
                 OnPropertyChanged(nameof(RepeatString));
@@ -191,7 +205,7 @@ namespace EzWorkout.ViewModels
         {
             get
             {
-                return $"Repeat: {Repeat}";
+                return $"x {Repeat}";
             }
         }
         public string DistanceString
@@ -227,7 +241,7 @@ namespace EzWorkout.ViewModels
             Duration = DurationMax;
             Distance = DistanceMax;
             Repeat = RepeatMax;
-            Color = Color.LightBlue;
+            Color = inactiveColor;
         }
 
         public void ToggleSelection()

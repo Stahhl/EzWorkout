@@ -26,17 +26,16 @@ namespace EzWorkout.ViewModels
             _intervals.CollectionChanged += OnIntervalsChanged;
         }
 
-        private void OnIntervalsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(Intervals));
-            OnPropertyChanged(nameof(Description));
-        }
-
         private Workout _workout;
         private ObservableCollection<IntervalViewModel> _intervals;
         private string _btnStartText = "START";
         private bool _isLooping;
 
+        private void OnIntervalsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Intervals));
+            OnPropertyChanged(nameof(Description));
+        }
         public bool IsLooping
         {
             get { return _isLooping; }

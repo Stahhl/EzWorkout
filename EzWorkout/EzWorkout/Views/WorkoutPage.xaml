@@ -32,7 +32,12 @@
                         <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
                         <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
                         <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding Duration}" FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+
+                        <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                            <Label Text="{Binding Duration}" HorizontalOptions="End" FontAttributes="Bold" FontSize="15" Margin="10"/>
+                            <Label Text="{Binding RepeatString}" HorizontalOptions="End" FontAttributes="Bold" FontSize="15" Margin="10"/>
+
+                        </StackLayout>
 
                     </StackLayout>
 

@@ -24,11 +24,8 @@ namespace EzWorkout.Views
 
             BindingContext = _viewModel = workoutViewModel;
 
-            itemsVisibility();
-
-            listView.ChildAdded += ItemsVisibility;
             listView.SelectionChanged += SelectionChanged;
-            listView.ItemDragging += ItemsDrasgging;
+            listView.ItemDragging += ItemDragging;
 
             var tempArray = Enum.GetNames(typeof(IntervalType));
             _typeArray = new string[tempArray.Length - 1];
@@ -39,7 +36,7 @@ namespace EzWorkout.Views
         private CancellationTokenSource _cts;
         private string[] _typeArray;
 
-        private void ItemsDrasgging(object sender, ItemDraggingEventArgs e)
+        private void ItemDragging(object sender, ItemDraggingEventArgs e)
         {
             if (e.Action == DragAction.Drop && e.NewIndex != e.OldIndex)
             {
@@ -110,29 +107,6 @@ namespace EzWorkout.Views
                 Task.Run(() => LoopItems());
 
                 _viewModel.BtnStartText = "RESET";
-            }
-        }
-        private void ItemsVisibility(object sender, EventArgs e)
-        {
-            itemsVisibility();
-        }
-        private void itemsVisibility()
-        {
-            for (int i = 0; i < _viewModel.Intervals.Count; i++)
-            {
-                var interval = _viewModel.Intervals[i];
-
-                switch (interval.Type)
-                {
-                    case IntervalType.DURATION:
-                        break;
-                    case IntervalType.DISTANCE:
-                        break;
-                    case IntervalType.GOTO:
-                        break;
-                    default:
-                        throw new Exception("default");
-                }
             }
         }
         private async void SelectionChanged(object sender, ItemSelectionChangedEventArgs args)
