@@ -27,6 +27,8 @@ namespace EzWorkout.Views
             listView.SelectionChanged += SelectionChanged;
             listView.ItemDragging += ItemDragging;
 
+            SumIntervalRepeats();
+
             var tempArray = Enum.GetNames(typeof(IntervalType));
             _typeArray = new string[tempArray.Length - 1];
             Array.Copy(tempArray, 1, _typeArray, 0, tempArray.Length - 1);
@@ -90,7 +92,7 @@ namespace EzWorkout.Views
 
             await Navigation.PushAsync(new IntervalPage(_viewModel, intervalType));
         }
-        private void BtnStart(object sender, EventArgs e)
+        private void BtnStartReset(object sender, EventArgs e)
         {
             if (_cts != null)
             {
@@ -142,18 +144,19 @@ namespace EzWorkout.Views
                             current.CountdownDistance(_cts);
                             break;
                         case IntervalType.GOTO:
-                            if (current.Repeat > 0)
+                            if (current.Deactivated == false)
                             {
-                                Reset(i);
+                                Reset(current.GoTo, i);
 
-                                current.Repeat--;
-                                i = current.GoTo;
+                                //current.Repeat--;
+                                i = current.GoTo - 1;
                             }
                             break;
                         default:
                             throw new NotImplementedException("default");
                     }
 
+                    current.Repeat--;
                     last = current;
                 }
 
@@ -161,21 +164,47 @@ namespace EzWorkout.Views
             }
             catch (TaskCanceledException)
             {
-                //if (last != null)
-                //    last.ToggleSelection();
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        private void Reset(int loopTo = -1)
+        private void Reset(int loopFrom = 0, int loopTo = -1)
         {
-            loopTo = loopTo == -1 ? _viewModel.Intervals.Count : loopTo;
+            bool full = loopTo == -1 ? true : false;
+            loopTo = full ? _viewModel.Intervals.Count : loopTo;
 
-            for (int i = 0; i < loopTo; i++)
+            for (int i = loopFrom; i < loopTo; i++)
             {
-                _viewModel.Intervals[i].Reset();
+                _viewModel.Intervals[i].Reset(full);
+            }
+
+            if (full)
+                SumIntervalRepeats();
+        }
+        private void SumIntervalRepeats()
+        {
+            //im too dumb to do reverse for loops
+            var reverse = _viewModel.Intervals.Reverse().ToList();
+
+            for (int a = 0; a < reverse.Count; a++)
+            {
+                if(reverse[a].Type == IntervalType.GOTO)
+                {
+                    int aAmount = reverse[a].Repeat < 1 ? 1 : reverse[a].Repeat;
+
+                    for (int b = a + 1; b < reverse.Count; b++)
+                    {
+                        if(reverse[b].IntervalIndex >= reverse[a].GoTo)
+                        {
+                            int bAmount = reverse[b].Repeat < 1 ? 1 : reverse[b].Repeat;
+
+                            reverse[b].Repeat += aAmount * bAmount;
+                        }
+                    }
+                }
             }
         }
     }

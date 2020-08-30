@@ -29,8 +29,8 @@
                     <!--Toggle visibility rather than having multiple views-->
                     
                     <StackLayout x:Name="DurationObj" IsEnabled="{Binding DurationEnabled}" IsVisible="{Binding DurationEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
-                        <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="10"/>
                         <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
 
                         <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
@@ -42,19 +42,28 @@
                     </StackLayout>
 
                     <StackLayout x:Name="DistanceOnj" IsEnabled="{Binding DistanceEnabled}" IsVisible="{Binding DistanceEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
-                        <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="10"/>
                         <Label Text="{Binding Intensity}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding DistanceString}" FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+
+                        <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                            <Label Text="{Binding DistanceString}" HorizontalOptions="End" FontAttributes="Bold" FontSize="15" Margin="10"/>
+                            <Label Text="{Binding RepeatString}" HorizontalOptions="End" FontAttributes="Bold" FontSize="15" Margin="10"/>
+
+                        </StackLayout>
 
                     </StackLayout>
 
                     <StackLayout x:Name="GoToObj" IsEnabled="{Binding GoToEnabled}" IsVisible="{Binding GoToEnabled}" Orientation="Horizontal" BackgroundColor="{Binding Color}" Margin="10" VerticalOptions="FillAndExpand">
-                        <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding RepeatString}"  FontAttributes="Bold" FontSize="15" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="10"/>
-                        <Label Text="{Binding GoToString}" FontAttributes="Bold" FontSize="15" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding IntervalIndex}" FontAttributes="Bold" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="10"/>
+                        <Label Text="{Binding Type}" FontAttributes="Bold" FontSize="15" HorizontalOptions="Start" VerticalOptions="Center" Margin="10"/>
 
+                        <StackLayout Orientation="Vertical" HorizontalOptions="EndAndExpand">
+                            <Label Text="{Binding GoToString}" HorizontalOptions="End" FontAttributes="Bold" FontSize="15" Margin="10"/>
+                            <Label Text="{Binding RepeatString}" HorizontalOptions="End" FontAttributes="Bold" FontSize="15" Margin="10"/>
+
+                        </StackLayout>
+                        
                     </StackLayout>
 
                 </StackLayout>
@@ -68,7 +77,7 @@
                 <StackLayout VerticalOptions="End" Orientation="Horizontal" Margin="5">
                     <!--DOM issues cant do "x:name.clicked = x;" here, just bind the Clicked directly.-->
                     <Button Clicked="BtnAddItem" Text="ADD" HorizontalOptions="FillAndExpand"/>
-                    <Button Clicked="BtnStart" Text="{Binding BtnStartText}" HorizontalOptions="FillAndExpand"/>
+                    <Button Clicked="BtnStartReset" Text="{Binding BtnStartText}" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
             </DataTemplate>

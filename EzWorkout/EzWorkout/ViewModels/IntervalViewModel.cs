@@ -20,7 +20,7 @@ namespace EzWorkout.ViewModels
             _interval = interval;
             IntervalIndex = intervalIndex;
 
-            Reset();
+            Reset(true);
 
             Color = Color.LightBlue;
 
@@ -41,7 +41,6 @@ namespace EzWorkout.ViewModels
         private TimeSpan _duration;
         private int _distance;
         private int _repeat;
-        private bool _deactive;
 
         private readonly Color inactiveColor = Color.LightBlue;
         private readonly Color activeColor = Color.LightGreen;
@@ -49,6 +48,16 @@ namespace EzWorkout.ViewModels
 
         public ObservableCollection<string> Types { get; private set; }
 
+        public bool Deactivated 
+        { 
+            get 
+            {
+                if (Repeat < 1)
+                    return true;
+
+                return false;
+            } 
+        }
         public _Interval Interval
         {
             get { return _interval; }
@@ -71,8 +80,8 @@ namespace EzWorkout.ViewModels
         {
             get 
             {
-                //if (_deactive)
-                //    return deactiveColor;
+                if (Deactivated)
+                    return deactiveColor;
 
                 return _color; 
             }
@@ -168,12 +177,6 @@ namespace EzWorkout.ViewModels
             get { return _repeat; }
             set
             {
-                if (value < 0)
-                    return;
-
-                if (value == 0)
-                    _deactive = true;
-
                 _repeat = value;
 
                 OnPropertyChanged(nameof(RepeatString));
@@ -181,16 +184,9 @@ namespace EzWorkout.ViewModels
         }
         public int RepeatMax
         {
-            get { return _interval.Repeat; }
-            set
-            {
-                if (value < 0)
-                    return;
-
-                _interval.Repeat = value;
-                Repeat = _interval.Repeat;
-
-                OnPropertyChanged(nameof(RepeatMax));
+            get 
+            { 
+                return _interval.Repeat > 1 ? _interval.Repeat : 1; 
             }
         }
 
@@ -205,13 +201,13 @@ namespace EzWorkout.ViewModels
         {
             get
             {
-                return $"x {Repeat}";
+                return $"x {_repeat}";
             }
         }
         public string DistanceString
         {
             //OnPropertyChanged from setter on this.Distance
-            get { return Humanizer.DistanceFromM(Distance); }
+            get { return Humanizer.DistanceFromM(_distance); }
         }
 
         public bool GoToEnabled
@@ -236,12 +232,12 @@ namespace EzWorkout.ViewModels
             }
         }
 
-        public void Reset()
+        public void Reset(bool full)
         {
             _isSelected = false;
             Duration = DurationMax;
             Distance = DistanceMax;
-            Repeat = RepeatMax;
+            Repeat = full ?  RepeatMax : Repeat;
             Color = inactiveColor;
         }
 
@@ -251,11 +247,11 @@ namespace EzWorkout.ViewModels
 
             if (_isSelected == true)
             {
-                Color = Color.Green;
+                Color = activeColor;
             }
             else
             {
-                Color = Color.LightBlue;
+                Color = inactiveColor;
             }
         }
         public void CountdownTime(CancellationTokenSource cts)
@@ -293,22 +289,18 @@ namespace EzWorkout.ViewModels
 
                 if (dist > 0.001)
                 {
-                    double m = dist * 1000;
-                    double floor = Math.Floor(m);
-                    double km = floor * 0.001;
+                    double m = dist * 1000; //km to m
+                    double floor = Math.Floor(m); //m floored
+                    double km = floor * 0.001; //km floored
 
                     gpsManager.TotalDistance -= km;
                     Distance -= (int)floor;
                 }
             }
         }
-        public void CountdownGoTo()
-        {
-            if (Repeat == 0)
-                return;
-
-            Repeat--;
-        }
-
+        //public void CountdownGoTo()
+        //{
+        //    throw new NotImplementedException("Handled in WorkoutPage.LoopItems");
+        //}
     }
 }

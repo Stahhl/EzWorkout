@@ -1,11 +1,9 @@
 ﻿using EzWorkout.Models;
+using EzWorkout.Services;
 using Syncfusion.ListView.XForms;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Text;
-using Xamarin.Forms;
+using System.Linq;
 using SelectionMode = Syncfusion.ListView.XForms.SelectionMode;
 
 namespace EzWorkout.ViewModels
