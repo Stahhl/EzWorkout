@@ -60,7 +60,7 @@ namespace EzWorkout.ViewModels
         public int IntervalIndex
         {
             get { return _intervalIndex; }
-            set 
+            set
             {
                 _intervalIndex = value;
 
@@ -86,7 +86,7 @@ namespace EzWorkout.ViewModels
         public IntervalIntensity Intensity
         {
             get { return _interval.Intensity; }
-            set 
+            set
             {
                 Interval.Intensity = value;
 
@@ -96,7 +96,7 @@ namespace EzWorkout.ViewModels
         public IntervalType Type
         {
             get { return _interval.Type; }
-            set 
+            set
             {
                 _interval.Type = value;
 
@@ -121,7 +121,7 @@ namespace EzWorkout.ViewModels
         public TimeSpan Duration
         {
             get { return _duration; }
-            set 
+            set
             {
                 _duration = value;
 
@@ -238,6 +238,7 @@ namespace EzWorkout.ViewModels
 
         public void Reset()
         {
+            _isSelected = false;
             Duration = DurationMax;
             Distance = DistanceMax;
             Repeat = RepeatMax;
@@ -284,15 +285,20 @@ namespace EzWorkout.ViewModels
         public void CountdownDistance(CancellationTokenSource cts)
         {
             var gpsManager = new GpsManager();
+            gpsManager.TrackDistance(cts);
 
             while (Distance > 0)
             {
-                gpsManager.TrackDistance(cts);
+                double dist = gpsManager.TotalDistance;
 
-                if (gpsManager.TotalDistance > 0.001)
+                if (dist > 0.001)
                 {
-                    gpsManager.TotalDistance -= 0.001;
-                    Distance -= 1;
+                    double m = dist * 1000;
+                    double floor = Math.Floor(m);
+                    double km = floor * 0.001;
+
+                    gpsManager.TotalDistance -= km;
+                    Distance -= (int)floor;
                 }
             }
         }

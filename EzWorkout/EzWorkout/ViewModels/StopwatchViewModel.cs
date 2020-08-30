@@ -69,26 +69,26 @@ namespace EzWorkout.ViewModels
 
         public void Start()
         {
-            _stopWatch.Start();
-            _cts = new CancellationTokenSource();
+            //_stopWatch.Start();
+            //_cts = new CancellationTokenSource();
 
-            ButtonText_StartStop = "STOP";
+            //ButtonText_StartStop = "STOP";
 
-            Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
-            {
-                Duration = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
+            //Device.StartTimer(TimeSpan.FromMilliseconds(100), () =>
+            //{
+            //    Duration = _stopWatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
 
-                if (TrackDistance == true)
-                {
-                    _gpsManager.TrackDistance(_cts);
-                    Distance = Humanizer.DistanceFromKm(_gpsManager.TotalDistance);
-                }
+            //    if (TrackDistance == true)
+            //    {
+            //        _gpsManager.TrackDistance(_cts);
+            //        Distance = Humanizer.DistanceFromKm(_gpsManager.TotalDistance);
+            //    }
 
-                if (_stopWatch.IsRunning == false)
-                    return false;
-                else
-                    return true;
-            });
+            //    if (_stopWatch.IsRunning == false)
+            //        return false;
+            //    else
+            //        return true;
+            //});
         }
         public void Stop()
         {
